@@ -118,7 +118,7 @@ public class RedGoalPosition extends LinearOpMode {
         rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Starting at",  "%7d :%7d",
+        telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d :%7d :%7d",
                 leftFrontMotor.getCurrentPosition(),
                 rightFrontMotor.getCurrentPosition(),
                 leftBackMotor.getCurrentPosition(),
