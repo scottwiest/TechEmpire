@@ -32,8 +32,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Blue Goal Position")
-public class BlueGoalPosition extends LinearOpMode {
+@Autonomous(name="Red Wall Position")
+public class RedWallPosition extends LinearOpMode {
     private final Robot robot = new Robot();
 
     @Override
@@ -56,11 +56,10 @@ public class BlueGoalPosition extends LinearOpMode {
         sleep(2500);
         robot.setLauncherPower(0);
 
-        robot.encoderDrive(this, 0.6,   24, -24, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        robot.encoderDrive(this, 0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
         robot.encoderDrive(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }
-

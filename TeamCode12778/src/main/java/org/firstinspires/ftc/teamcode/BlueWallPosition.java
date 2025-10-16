@@ -32,8 +32,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Blue Goal Position")
-public class BlueGoalPosition extends LinearOpMode {
+@Autonomous(name="Blue Wall Position")
+public class BlueWallPosition extends LinearOpMode {
     private final Robot robot = new Robot();
 
     @Override
@@ -49,18 +49,17 @@ public class BlueGoalPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.encoderDrive(this, -0.5,  24,  24, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        robot.encoderDrive(this, -0.5,  24,  24, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
 
         // shoot artifact code here
         robot.setLauncherPower(0.5);
         sleep(2500);
         robot.setLauncherPower(0);
 
-        robot.encoderDrive(this, 0.6,   24, -24, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        robot.encoderDrive(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        robot.encoderDrive(this, 0.6,   24, -24, 5.0);  // S2: Turn Right 24 Inches with 5 Sec timeout
+        robot.encoderDrive(this, 0.5, 24, 24, 5.0);  // S3: Reverse 24 Inches with 5 Sec timeout
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }
-
