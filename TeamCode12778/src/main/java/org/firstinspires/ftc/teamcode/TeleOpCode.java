@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 @TeleOp(name = "TeleOpCode")
-public class TeleOpCode extends LinearOpMode {
+public class TeleOpCode  extends LinearOpMode {
 
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
@@ -15,6 +16,7 @@ public class TeleOpCode extends LinearOpMode {
     DcMotor backRightMotor;
     DcMotor leftLauncher;
     DcMotor rightLauncher;
+    DcMotor intake;
 
     double leftFrontPower;
     double leftBackPower;
@@ -49,6 +51,7 @@ public class TeleOpCode extends LinearOpMode {
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
         leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
+        intake = hardwareMap.get(DcMotor.class, "intake");
 
         runtime = new ElapsedTime();
         // ########################################################################################
@@ -70,6 +73,8 @@ public class TeleOpCode extends LinearOpMode {
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftLauncher.setDirection(DcMotor.Direction.REVERSE);
+        rightLauncher.setDirection(DcMotor.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -118,13 +123,19 @@ public class TeleOpCode extends LinearOpMode {
                 leftLauncher.setPower(0);
                 rightLauncher.setPower(0);
             }
+            if (gamepad1.dpadUpWasPressed()) {
+            intake.setPower(1);
+            }
+            if (gamepad1.dpadUpWasReleased()) {
+                intake.setPower(0);
+            }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
             telemetry.addData("Front left/Right", JavaUtil.formatNumber(leftFrontPower, 4, 2) + ", " + JavaUtil.formatNumber(rightFrontPower, 4, 2));
             telemetry.addData("Back  left/Right", JavaUtil.formatNumber(leftBackPower, 4, 2) + ", " + JavaUtil.formatNumber(rightBackPower, 4, 2));
             telemetry.update();
         }
-    }
+    }}
 
     /**
      * This function is used to test your motor directions.
@@ -134,10 +145,3 @@ public class TeleOpCode extends LinearOpMode {
      *   2) Then make sure they run in the correct direction by modifying the
      *      the setDirection() calls above.
      */
-    private void testMotorDirections() {
-        leftFrontPower = gamepad1.x ? 1 : 0;
-        leftBackPower = gamepad1.a ? 1 : 0;
-        rightFrontPower = gamepad1.y ? 1 : 0;
-        rightBackPower = gamepad1.b ? 1 : 0;
-    }
-}

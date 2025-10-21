@@ -56,7 +56,7 @@ public class BlueGoalPosition extends LinearOpMode {
         sleep(2500);
         robot.setLauncherPower(0);
 
-        robot.encoderDrive(this, 0.6,   30, -30, 4.0);  // S2: Turn Right 15 Inches with 4 Sec timeout
+        robot.encoderDrive(this, 0.5,   30, -30, 4.0);  // S2: Turn Right 15 Inches with 4 Sec timeout
         robot.encoderDrive(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         robot.logPathCompleted(telemetry);
