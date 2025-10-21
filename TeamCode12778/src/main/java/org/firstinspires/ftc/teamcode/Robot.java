@@ -15,6 +15,7 @@ public class Robot {
   DcMotor rightBackMotor;
   DcMotor leftLauncher;
   DcMotor rightLauncher;
+  DcMotor intake;
 
   static final double COUNTS_PER_MOTOR_REV = 538;
   static final double WHEEL_DIAMETER_INCHES = 4.0;
@@ -28,6 +29,7 @@ public class Robot {
     rightBackMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
     leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
     rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
+    intake = hardwareMap.get(DcMotor.class, "intake");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
