@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Red Wall Position")
 public class RedWallPosition extends LinearOpMode {
@@ -49,15 +50,23 @@ public class RedWallPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.encoderDrive(this, -0.5,  24,  24, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        robot.encoderDrive(this, 0.5,  72,  72, 5.0); // S1: Forward 47 Inches with 5 Sec timeout
+        robot.encoderDrive(this, 0.6,   24, -24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
 
         // shoot artifact code here
         robot.setLauncherPower(0.5);
         sleep(2500);
         robot.setLauncherPower(0);
 
-        robot.encoderDrive(this, 0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
-        robot.encoderDrive(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        robot.rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        robot.rightFrontMotor.setPower(1);
+        robot.leftFrontMotor.setPower(-1);
+        robot.rightBackMotor.setPower(-1);
+        robot.leftBackMotor.setPower(1);
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
