@@ -127,7 +127,11 @@ public class TeleOpCode  extends LinearOpMode {
                 leftLauncher.setPower(0);
                 rightLauncher.setPower(0);
             }
-            intake.setPower(1);
+            if (gamepad1.dpadUpWasPressed()) {
+                intake.setPower(1);
+            }
+            if (gamepad1.dpadUpWasReleased()) {
+                intake.setPower(0);
             }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
@@ -135,7 +139,7 @@ public class TeleOpCode  extends LinearOpMode {
             telemetry.addData("Back  left/Right", JavaUtil.formatNumber(leftBackPower, 4, 2) + ", " + JavaUtil.formatNumber(rightBackPower, 4, 2));
             telemetry.update();
         }
-    }
+    }}
 
     /**
      * This function is used to test your motor directions.
