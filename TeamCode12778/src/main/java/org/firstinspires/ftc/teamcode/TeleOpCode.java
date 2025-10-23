@@ -74,7 +74,7 @@ public class TeleOpCode  extends LinearOpMode {
         leftLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightLauncher.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightLauncher.setDirection(DcMotor.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
