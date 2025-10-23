@@ -57,6 +57,7 @@ public class BlueWallPosition extends LinearOpMode {
         robot.setLauncherPower(0);
 
         robot.encoderDrive(this, 0.6,   24, -24, 5.0);  // S2: Turn Left 24 Inches with 5 Sec timeout
+        robot.encoderDrive(this, 0.5, 24, 24, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
         
 
         robot.logPathCompleted(telemetry);
