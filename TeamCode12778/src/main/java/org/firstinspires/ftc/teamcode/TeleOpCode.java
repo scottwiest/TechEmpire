@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
@@ -17,7 +19,7 @@ public class TeleOpCode  extends LinearOpMode {
     DcMotor leftLauncher;
     DcMotor rightLauncher;
     DcMotor intake;
-    DcMotor transport;
+    CRServo transport;
 
     double leftFrontPower;
     double leftBackPower;
@@ -53,7 +55,7 @@ public class TeleOpCode  extends LinearOpMode {
         leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
         intake = hardwareMap.get(DcMotor.class, "intake");
-        transport = hardwareMap.get(DcMotor.class, "transport");
+        transport = hardwareMap.get(CRServo.class, "transport");
 
         runtime = new ElapsedTime();
         // ########################################################################################
@@ -136,9 +138,11 @@ public class TeleOpCode  extends LinearOpMode {
                 intake.setPower(0);
             }
             if (gamepad1.dpadDownWasPressed()) {
+                intake.setPower(1);
                 transport.setPower(1);
             }
             if (gamepad1.dpadDownWasReleased()) {
+                intake.setPower(0);
                 transport.setPower(0);
             }
             // Show the elapsed game time and wheel power.
