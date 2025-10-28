@@ -19,7 +19,8 @@ public class TeleOpCode  extends LinearOpMode {
     DcMotor leftLauncher;
     DcMotor rightLauncher;
     DcMotor intake;
-    CRServo transport;
+    CRServo transportRight;
+    CRServo transportLeft;
 
     double leftFrontPower;
     double leftBackPower;
@@ -55,7 +56,8 @@ public class TeleOpCode  extends LinearOpMode {
         leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
         intake = hardwareMap.get(DcMotor.class, "intake");
-        transport = hardwareMap.get(CRServo.class, "transport");
+        transportRight = hardwareMap.get(CRServo.class, "transportRight");
+        transportLeft = hardwareMap.get(CRServo.class, "transportLeft");
 
         runtime = new ElapsedTime();
         // ########################################################################################
@@ -139,11 +141,13 @@ public class TeleOpCode  extends LinearOpMode {
             }
             if (gamepad1.dpadDownWasPressed()) {
                 intake.setPower(1);
-                transport.setPower(1);
+                transportRight.setPower(1);
+                transportLeft.setPower(-1);
             }
             if (gamepad1.dpadDownWasReleased()) {
                 intake.setPower(0);
-                transport.setPower(0);
+                transportRight.setPower(0);
+                transportLeft.setPower(0);
             }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
