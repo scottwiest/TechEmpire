@@ -142,7 +142,7 @@ public class TeleOpCode  extends LinearOpMode {
             if (gamepad1.dpadDownWasPressed()) {
                 intake.setPower(1);
                 transportRight.setPower(1);
-                transportLeft.setPower(-1);
+                transportLeft.setPower(1);
             }
             if (gamepad1.dpadDownWasReleased()) {
                 intake.setPower(0);
