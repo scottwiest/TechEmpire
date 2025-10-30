@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
-@TeleOp(name = "TeleOpCode")
-public class TeleOpCode  extends LinearOpMode {
+@TeleOp(name = "TeleOp2Controllers")
+public class TeleOp2Controllers  extends LinearOpMode {
 
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
@@ -105,10 +105,10 @@ public class TeleOpCode  extends LinearOpMode {
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
             max = JavaUtil.maxOfList(JavaUtil.createListWith(Math.abs(leftFrontPower), Math.abs(rightFrontPower), Math.abs(leftBackPower), Math.abs(rightBackPower)));
-            if (gamepad1.left_bumper) {
+            if (gamepad1.a) {
                 Drive_Speed = 0.5;
             }
-            if (gamepad1.right_bumper) {
+            if (gamepad1.b) {
                 Drive_Speed = 1;
             }
             if (max > Drive_Speed) {
@@ -122,34 +122,34 @@ public class TeleOpCode  extends LinearOpMode {
             frontRightMotor.setPower(rightFrontPower);
             backLeftMotor.setPower(leftBackPower);
             backRightMotor.setPower(rightBackPower);
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 leftLauncher.setPower(1);
                 rightLauncher.setPower(1);
             }
-            if (gamepad1.b) {
+            if (gamepad2.b) {
                 leftLauncher.setPower(0.5);
                 rightLauncher.setPower(0.5);
             }
-            if (gamepad1.y) {
+            if (gamepad2.y) {
                 leftLauncher.setPower(0.35);
                 rightLauncher.setPower(0.35);
             }
-            if (gamepad1.x) {
+            if (gamepad2.x) {
                 leftLauncher.setPower(0);
                 rightLauncher.setPower(0);
             }
-            if (gamepad1.dpadUpWasPressed()) {
+            if (gamepad2.dpadUpWasPressed()) {
                 intake.setPower(1);
             }
-            if (gamepad1.dpadUpWasReleased()) {
+            if (gamepad2.dpadUpWasReleased()) {
                 intake.setPower(0);
             }
-            if (gamepad1.dpadDownWasPressed()) {
+            if (gamepad2.dpadDownWasPressed()) {
                 intake.setPower(1);
                 transportRight.setPower(1);
                 transportLeft.setPower(1);
             }
-            if (gamepad1.dpadDownWasReleased()) {
+            if (gamepad2.dpadDownWasReleased()) {
                 intake.setPower(0);
                 transportRight.setPower(0);
                 transportLeft.setPower(0);
@@ -162,11 +162,12 @@ public class TeleOpCode  extends LinearOpMode {
         }
     }}
 
-    /**
-     * This function is used to test your motor directions.
-     * Each button should make the corresponding motor run FORWARD.
-     *   1) First get all the motors to take to correct positions on the robot
-     *      by adjusting your Robot Configuration if necessary.
-     *   2) Then make sure they run in the correct direction by modifying the
-     *      the setDirection() calls above.
-     */
+/**
+ * This function is used to test your motor directions.
+ * Each button should make the corresponding motor run FORWARD.
+ *   1) First get all the motors to take to correct positions on the robot
+ *      by adjusting your Robot Configuration if necessary.
+ *   2) Then make sure they run in the correct direction by modifying the
+ *      the setDirection() calls above.
+ */
+
