@@ -49,7 +49,7 @@ public class BlueGoalPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.encoderDrive(this, -0.5,  24,  24, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        robot.encoderDrive(this, -0.5,  24,  24, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
 
         // shoot artifact code here
         robot.setLauncherPower(0.5);
