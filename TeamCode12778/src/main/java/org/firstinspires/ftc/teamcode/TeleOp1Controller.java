@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
-@TeleOp(name = "TeleOpCodeController1")
-public class TeleOpCodeController1 extends LinearOpMode {
+@TeleOp(name = "TeleOp1Controller")
+public class TeleOp1Controller extends LinearOpMode {
 
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
@@ -149,6 +149,14 @@ public class TeleOpCodeController1 extends LinearOpMode {
             }
             if (gamepad1.dpadDownWasReleased()) {
                 intake.setPower(0);
+                transportRight.setPower(0);
+                transportLeft.setPower(0);
+            }
+            if (gamepad1.dpadLeftWasPressed()) {
+                transportRight.setPower(1);
+                transportLeft.setPower(1);
+            }
+            if (gamepad1.dpadLeftWasReleased()) {
                 transportRight.setPower(0);
                 transportLeft.setPower(0);
             }

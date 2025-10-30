@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,6 +17,8 @@ public class Robot {
   DcMotor leftLauncher;
   DcMotor rightLauncher;
   DcMotor intake;
+  CRServo transportRight;
+  CRServo transportLeft;
 
   static final double COUNTS_PER_MOTOR_REV = 538;
   static final double WHEEL_DIAMETER_INCHES = 4.0;
@@ -30,6 +33,8 @@ public class Robot {
     leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
     rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
     intake = hardwareMap.get(DcMotor.class, "intake");
+    transportRight = hardwareMap.get(CRServo.class, "transportRight");
+    transportLeft = hardwareMap.get(CRServo.class, "transportLeft");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -75,6 +80,24 @@ public class Robot {
     leftLauncher.setPower(power);
     rightLauncher.setPower(power);
   }
+  public void stopMotorEncoder() {
+    rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+  }
+  public void RightStrafe() {
+    rightFrontMotor.setPower(1);
+    leftFrontMotor.setPower(-1);
+    rightBackMotor.setPower(-1);
+    leftBackMotor.setPower(1);
+  }
+  public void LeftStrafe() {
+    rightFrontMotor.setPower(-1);
+    leftFrontMotor.setPower(1);
+    rightBackMotor.setPower(1);
+    leftBackMotor.setPower(-1);
+  }
 
   /*
    *  Method to perform a relative move, based on encoder counts.
@@ -84,11 +107,13 @@ public class Robot {
    *  2) Move runs out of time
    *  3) Driver stops the OpMode running.
    */
-  public void encoderDrive(LinearOpMode opMode,
-      double speed,
-      double leftInches,
-      double rightInches,
-      double timeoutS) {
+  public void setDriveInstructions(
+          LinearOpMode opMode,
+          double speed,
+          double leftInches,
+          double rightInches,
+          double timeoutS
+  ) {
     int newLeftFrontTarget;
     int newRightFrontTarget;
     int newLeftBackTarget;
