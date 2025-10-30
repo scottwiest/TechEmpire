@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
-@TeleOp(name = "TeleOpCode")
-public class TeleOpCode  extends LinearOpMode {
+@TeleOp(name = "TeleOpCodeController1")
+public class TeleOpCodeController1  extends LinearOpMode {
 
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
