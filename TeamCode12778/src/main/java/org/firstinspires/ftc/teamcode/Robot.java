@@ -149,6 +149,11 @@ public class Robot {
       leftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
       rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+    
+      public void setLauncherEncoder() {
+      leftLauncher.setMode(Dc.Motor.RunMode.RUN_USING_ENCODER);
+      rightLauncher.setMode(Dc.Motor.RunMode.RUN_USING_ENCODER);
+      }
       opMode.sleep(250);   // optional pause after each move.
     }
   }
