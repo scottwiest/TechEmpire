@@ -55,13 +55,13 @@ public class RedWallPosition extends LinearOpMode {
         // shoot artifact code here
         robot.transportLeft.setPower(1);
         robot.transportRight.setPower(1);
-        robot.runLauncher(this, 5);
+        robot.runLauncher(this, 5, 0.5);
         robot.transportLeft.setPower(0);
         robot.transportRight.setPower(0);
 
         robot.stopMotorEncoder();
 
-        robot.RightStrafe();
+        robot.rightStrafe();
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.

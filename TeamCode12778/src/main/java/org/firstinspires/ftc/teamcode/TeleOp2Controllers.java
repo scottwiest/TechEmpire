@@ -2,10 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
@@ -98,16 +94,13 @@ public class TeleOp2Controllers  extends LinearOpMode {
             robot.leftBackMotor.setPower(leftBackPower);
             robot.rightBackMotor.setPower(rightBackPower);
             if (gamepad2.a) {
-                robot.leftLauncher.setPower(1);
-                robot.rightLauncher.setPower(1);
+                robot.runLauncher(this, 5, 1.0);
             }
             if (gamepad2.b) {
-                robot.leftLauncher.setPower(0.5);
-                robot.rightLauncher.setPower(0.5);
+                robot.runLauncher(this, 5, 0.5);
             }
             if (gamepad2.y) {
-                robot.leftLauncher.setPower(0.35);
-                robot.rightLauncher.setPower(0.35);
+                robot.runLauncher(this, 5, 0.25);
             }
             if (gamepad2.x) {
                 robot.leftLauncher.setPower(0);
@@ -144,13 +137,3 @@ public class TeleOp2Controllers  extends LinearOpMode {
             telemetry.update();
         }
     }}
-
-/**
- * This function is used to test your motor directions.
- * Each button should make the corresponding motor run FORWARD.
- *   1) First get all the motors to take to correct positions on the robot
- *      by adjusting your Robot Configuration if necessary.
- *   2) Then make sure they run in the correct direction by modifying the
- *      the setDirection() calls above.
- */
-

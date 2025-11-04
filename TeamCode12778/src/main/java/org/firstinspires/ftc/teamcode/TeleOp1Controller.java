@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
@@ -98,16 +95,13 @@ public class TeleOp1Controller extends LinearOpMode {
             robot.leftBackMotor.setPower(leftBackPower);
             robot.rightBackMotor.setPower(rightBackPower);
             if (gamepad1.y) {
-                robot.leftLauncher.setPower(1);
-                robot.rightLauncher.setPower(1);
+                robot.runLauncher(this, 5, 1.0);
             }
             if (gamepad1.b) {
-                robot.leftLauncher.setPower(0.5);
-                robot.rightLauncher.setPower(0.5);
+                robot.runLauncher(this, 5, 0.5);
             }
             if (gamepad1.a) {
-                robot.leftLauncher.setPower(0.35);
-                robot.rightLauncher.setPower(0.35);
+                robot.runLauncher(this, 5, 0.25);
             }
             if (gamepad1.x) {
                 robot.leftLauncher.setPower(0);

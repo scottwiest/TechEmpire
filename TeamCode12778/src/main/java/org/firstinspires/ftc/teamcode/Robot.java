@@ -26,7 +26,6 @@ public class Robot {
   static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
   
   static final double COUNTS_PER_LAUNCHER_REV = 28;
-  static final double LAUNCHER_POWER = 0.5;
 
   public void initializeMotors(HardwareMap hardwareMap) {
     // Initialize the drive system variables.
@@ -71,13 +70,11 @@ public class Robot {
 
   public void logCurrentPosition(Telemetry telemetry) {
     // Send telemetry message to indicate successful Encoder reset
-    telemetry.addData("Starting at",  "%7d :%7d",
+    telemetry.addData("Starting at",  "LF:%7d RF:%7d LB:%7d RB:%7d",
         leftFrontMotor.getCurrentPosition(),
         rightFrontMotor.getCurrentPosition(),
         leftBackMotor.getCurrentPosition(),
-        rightBackMotor.getCurrentPosition(),
-        leftLauncher.getCurrentPosition(),
-        rightLauncher.getCurrentPosition());
+        rightBackMotor.getCurrentPosition());
     telemetry.update();
   }
 
@@ -91,7 +88,7 @@ public class Robot {
   //   rightLauncher.setPower(power);
   // }
 
-  public void runLauncher(LinearOpMode opMode, double numberOfRevolutions) {
+  public void runLauncher(LinearOpMode opMode, double numberOfRevolutions, double power) {
 
     int leftLauncherTarget = leftLauncher.getCurrentPosition() + (int)(numberOfRevolutions * COUNTS_PER_LAUNCHER_REV);
     int rightLauncherTarget = rightLauncher.getCurrentPosition() + (int)(numberOfRevolutions * COUNTS_PER_LAUNCHER_REV);
@@ -101,8 +98,8 @@ public class Robot {
 
     leftLauncher.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     rightLauncher.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    leftLauncher.setPower(LAUNCHER_POWER);
-    rightLauncher.setPower(LAUNCHER_POWER);
+    leftLauncher.setPower(power);
+    rightLauncher.setPower(power);
     while (opMode.opModeIsActive() && leftLauncher.isBusy() && rightLauncher.isBusy()) {
       opMode.telemetry.addData("Running to",  " LL:%7d RL:%7d",
           leftLauncherTarget, rightLauncherTarget);
@@ -125,13 +122,13 @@ public class Robot {
     rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
   }
-  public void RightStrafe() {
+  public void rightStrafe() {
     rightFrontMotor.setPower(1);
     leftFrontMotor.setPower(-1);
     rightBackMotor.setPower(-1);
     leftBackMotor.setPower(1);
   }
-  public void LeftStrafe() {
+  public void leftStrafe() {
     rightFrontMotor.setPower(-1);
     leftFrontMotor.setPower(1);
     rightBackMotor.setPower(1);
