@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -20,9 +21,12 @@ public class Robot {
   CRServo transportRight;
   CRServo transportLeft;
 
-  static final double COUNTS_PER_MOTOR_REV = 538;
+  static final double COUNTS_PER_TIRE_REV = 537.7;
   static final double WHEEL_DIAMETER_INCHES = 4.0;
-  static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
+  static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
+  
+  static final double COUNTS_PER_LAUNCHER_REV = 28;
+  static final double LAUNCHER_POWER = 0.5;
 
   public void initializeMotors(HardwareMap hardwareMap) {
     // Initialize the drive system variables.
@@ -48,15 +52,19 @@ public class Robot {
   }
 
   public void setRunUsingEncoder() {
-    leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    leftFrontMotor.setMode(RunMode.STOP_AND_RESET_ENCODER);
+    rightFrontMotor.setMode(RunMode.STOP_AND_RESET_ENCODER);
+    leftBackMotor.setMode(RunMode.STOP_AND_RESET_ENCODER);
+    rightBackMotor.setMode(RunMode.STOP_AND_RESET_ENCODER);
+    leftLauncher.setMode(RunMode.STOP_AND_RESET_ENCODER);
+    rightLauncher.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
-    leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    leftFrontMotor.setMode(RunMode.RUN_USING_ENCODER);
+    rightFrontMotor.setMode(RunMode.RUN_USING_ENCODER);
+    leftBackMotor.setMode(RunMode.RUN_USING_ENCODER);
+    rightBackMotor.setMode(RunMode.RUN_USING_ENCODER);
+    leftLauncher.setMode(RunMode.RUN_USING_ENCODER);
+    rightLauncher.setMode(RunMode.RUN_USING_ENCODER);
   }
 
   public void logCurrentPosition(Telemetry telemetry) {
@@ -76,10 +84,39 @@ public class Robot {
     telemetry.update();
   }
 
-  public void setLauncherPower(double power) {
-    leftLauncher.setPower(power);
-    rightLauncher.setPower(power);
+  // public void setLauncherPower(double power) {
+  //   leftLauncher.setPower(power);
+  //   rightLauncher.setPower(power);
+  // }
+
+  public void runLauncher(LinearOpMode opMode, double numberOfRevolutions) {
+
+    int leftLauncherTarget = leftLauncher.getCurrentPosition() + (int)(numberOfRevolutions * COUNTS_PER_LAUNCHER_REV);
+    int rightLauncherTarget = rightLauncher.getCurrentPosition() + (int)(numberOfRevolutions * COUNTS_PER_LAUNCHER_REV);
+
+    leftLauncher.setTargetPosition(leftLauncherTarget);
+    rightLauncher.setTargetPosition(rightLauncherTarget);
+
+    leftLauncher.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    rightLauncher.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    leftLauncher.setPower(LAUNCHER_POWER);
+    rightLauncher.setPower(LAUNCHER_POWER);
+    while (opMode.opModeIsActive() && leftLauncher.isBusy() && rightLauncher.isBusy()) {
+      opMode.telemetry.addData("Running to",  " LL:%7d RL:%7d",
+          leftLauncherTarget, rightLauncherTarget);
+      opMode.telemetry.addData("Currently at",  " at LL:%7d RL:%7d",
+          leftLauncher.getCurrentPosition(),
+          rightLauncher.getCurrentPosition());
+      opMode.telemetry.update();
+    }
+
+    leftLauncher.setPower(0);
+    rightLauncher.setPower(0);
+
+    leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
   }
+
   public void stopMotorEncoder() {
     rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -98,10 +135,6 @@ public class Robot {
     rightBackMotor.setPower(1);
     leftBackMotor.setPower(-1);
   }
-  public void setLauncherEncoder() {
-    leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-  }
 
   /*
    *  Method to perform a relative move, based on encoder counts.
@@ -111,7 +144,7 @@ public class Robot {
    *  2) Move runs out of time
    *  3) Driver stops the OpMode running.
    */
-  public void setDriveInstructions(
+  public void runDriveInstructions(
           LinearOpMode opMode,
           double speed,
           double leftInches,
@@ -160,9 +193,13 @@ public class Robot {
           (leftFrontMotor.isBusy() && rightFrontMotor.isBusy() && leftBackMotor.isBusy() && rightBackMotor.isBusy())) {
 
         // Display it for the driver.
-        opMode.telemetry.addData("Running to",  " %7d :%7d", newLeftFrontTarget, newRightFrontTarget, newLeftBackTarget, newRightBackTarget);
-        opMode.telemetry.addData("Currently at",  " at %7d :%7d",
-            leftFrontMotor.getCurrentPosition(), rightFrontMotor.getCurrentPosition(), leftBackMotor.getCurrentPosition(), rightBackMotor.getCurrentPosition());
+        opMode.telemetry.addData("Running to",  " LF:%7d RF:%7d LB:%7d RB:%7d",
+            newLeftFrontTarget, newRightFrontTarget, newLeftBackTarget, newRightBackTarget);
+        opMode.telemetry.addData("Currently at",  " at LF:%7d RF:%7d LB:%7d RB:%7d",
+            leftFrontMotor.getCurrentPosition(),
+            rightFrontMotor.getCurrentPosition(),
+            leftBackMotor.getCurrentPosition(),
+            rightBackMotor.getCurrentPosition());
         opMode.telemetry.update();
       }
 
