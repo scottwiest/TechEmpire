@@ -11,16 +11,7 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 @TeleOp(name = "TeleOp2Controllers")
 public class TeleOp2Controllers  extends LinearOpMode {
-
-    DcMotor frontLeftMotor;
-    DcMotor backLeftMotor;
-    DcMotor frontRightMotor;
-    DcMotor backRightMotor;
-    DcMotor leftLauncher;
-    DcMotor rightLauncher;
-    DcMotor intake;
-    CRServo transportRight;
-    CRServo transportLeft;
+    private final Robot robot = new Robot();
 
     double leftFrontPower;
     double leftBackPower;
@@ -49,15 +40,7 @@ public class TeleOp2Controllers  extends LinearOpMode {
         float yaw;
         double max;
 
-        frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
-        backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
-        frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
-        backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
-        leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
-        rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-        transportRight = hardwareMap.get(CRServo.class, "transportRight");
-        transportLeft = hardwareMap.get(CRServo.class, "transportLeft");
+        robot.initializeMotors(hardwareMap);
 
         runtime = new ElapsedTime();
         // ########################################################################################
@@ -75,14 +58,6 @@ public class TeleOp2Controllers  extends LinearOpMode {
         // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward.
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
         // <--- Click blue icon to see important note re. testing motor directions.
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftLauncher.setDirection(DcMotor.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightLauncher.setDirection(DcMotor.Direction.FORWARD);
-        transportLeft.setDirection(CRServo.Direction.REVERSE);
-        transportRight.setDirection(CRServo.Direction.REVERSE);
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -118,49 +93,49 @@ public class TeleOp2Controllers  extends LinearOpMode {
                 rightBackPower = rightBackPower / max;
             }
             // Send calculated power to wheels.
-            frontLeftMotor.setPower(leftFrontPower);
-            frontRightMotor.setPower(rightFrontPower);
-            backLeftMotor.setPower(leftBackPower);
-            backRightMotor.setPower(rightBackPower);
+            robot.leftFrontMotor.setPower(leftFrontPower);
+            robot.rightFrontMotor.setPower(rightFrontPower);
+            robot.leftBackMotor.setPower(leftBackPower);
+            robot.rightBackMotor.setPower(rightBackPower);
             if (gamepad2.a) {
-                leftLauncher.setPower(1);
-                rightLauncher.setPower(1);
+                robot.leftLauncher.setPower(1);
+                robot.rightLauncher.setPower(1);
             }
             if (gamepad2.b) {
-                leftLauncher.setPower(0.5);
-                rightLauncher.setPower(0.5);
+                robot.leftLauncher.setPower(0.5);
+                robot.rightLauncher.setPower(0.5);
             }
             if (gamepad2.y) {
-                leftLauncher.setPower(0.35);
-                rightLauncher.setPower(0.35);
+                robot.leftLauncher.setPower(0.35);
+                robot.rightLauncher.setPower(0.35);
             }
             if (gamepad2.x) {
-                leftLauncher.setPower(0);
-                rightLauncher.setPower(0);
+                robot.leftLauncher.setPower(0);
+                robot.rightLauncher.setPower(0);
             }
             if (gamepad2.dpadUpWasPressed()) {
-                intake.setPower(1);
+                robot.intake.setPower(1);
             }
             if (gamepad2.dpadUpWasReleased()) {
-                intake.setPower(0);
+                robot.intake.setPower(0);
             }
             if (gamepad2.dpadDownWasPressed()) {
-                intake.setPower(1);
-                transportRight.setPower(1);
-                transportLeft.setPower(1);
+                robot.intake.setPower(1);
+                robot.transportRight.setPower(1);
+                robot.transportLeft.setPower(1);
             }
             if (gamepad2.dpadDownWasReleased()) {
-                intake.setPower(0);
-                transportRight.setPower(0);
-                transportLeft.setPower(0);
+                robot.intake.setPower(0);
+                robot.transportRight.setPower(0);
+                robot.transportLeft.setPower(0);
             }
             if (gamepad1.dpadLeftWasPressed()) {
-                transportRight.setPower(1);
-                transportLeft.setPower(1);
+                robot.transportRight.setPower(1);
+                robot.transportLeft.setPower(1);
             }
             if (gamepad1.dpadLeftWasReleased()) {
-                transportRight.setPower(0);
-                transportLeft.setPower(0);
+                robot.transportRight.setPower(0);
+                robot.transportLeft.setPower(0);
             }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
