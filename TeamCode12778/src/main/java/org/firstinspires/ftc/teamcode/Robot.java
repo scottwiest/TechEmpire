@@ -45,6 +45,8 @@ public class Robot {
     rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
     leftLauncher.setDirection(DcMotor.Direction.REVERSE);
     rightLauncher.setDirection(DcMotor.Direction.FORWARD);
+    transportLeft.setDirection(CRServo.Direction.REVERSE);
+    transportRight.setDirection(CRServo.Direction.REVERSE);
   }
 
   public void setRunUsingEncoder() {
