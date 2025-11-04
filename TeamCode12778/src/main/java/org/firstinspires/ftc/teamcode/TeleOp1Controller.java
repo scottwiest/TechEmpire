@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
@@ -79,8 +80,8 @@ public class TeleOp1Controller extends LinearOpMode {
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
         rightLauncher.setDirection(DcMotor.Direction.FORWARD);
-        transportLeft.setDirection(CRServo.Direction.FORWARD);
-        transportRight.setDirection(CRServo.Direction.FORWARD);
+        transportLeft.setDirection(CRServo.Direction.REVERSE);
+        transportRight.setDirection(CRServo.Direction.REVERSE);
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
