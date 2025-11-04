@@ -97,7 +97,7 @@ public class TeleOp1Controller extends LinearOpMode {
             robot.rightFrontMotor.setPower(rightFrontPower);
             robot.leftBackMotor.setPower(leftBackPower);
             robot.rightBackMotor.setPower(rightBackPower);
-            if (gamepad1.a) {
+            if (gamepad1.y) {
                 robot.leftLauncher.setPower(1);
                 robot.rightLauncher.setPower(1);
             }
@@ -105,7 +105,7 @@ public class TeleOp1Controller extends LinearOpMode {
                 robot.leftLauncher.setPower(0.5);
                 robot.rightLauncher.setPower(0.5);
             }
-            if (gamepad1.y) {
+            if (gamepad1.a) {
                 robot.leftLauncher.setPower(0.35);
                 robot.rightLauncher.setPower(0.35);
             }
@@ -144,12 +144,3 @@ public class TeleOp1Controller extends LinearOpMode {
             telemetry.update();
         }
     }}
-
-    /**
-     * This function is used to test your motor directions.
-     * Each button should make the corresponding motor run FORWARD.
-     *   1) First get all the motors to take to correct positions on the robot
-     *      by adjusting your Robot Configuration if necessary.
-     *   2) Then make sure they run in the correct direction by modifying the
-     *      the setDirection() calls above.
-     */

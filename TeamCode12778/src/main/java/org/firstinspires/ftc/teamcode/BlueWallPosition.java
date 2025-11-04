@@ -52,9 +52,13 @@ public class BlueWallPosition extends LinearOpMode {
         robot.setDriveInstructions(this, -0.5,  24,  24, 5.0);  // S1: Forward 72 Inches with 7 Sec timeout
 
         // shoot artifact code here
+        robot.transportLeft.setPower(1);
+        robot.transportRight.setPower(1);
         robot.setLauncherPower(0.5);
         sleep(2500);
         robot.setLauncherPower(0);
+        robot.transportLeft.setPower(0);
+        robot.transportRight.setPower(0);
 
         robot.setDriveInstructions(this, 0.6,   24, -24, 5.0);  // S2: Turn Left 24 Inches with 5 Sec timeout
         robot.setDriveInstructions(this, 0.5, 24, 24, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
