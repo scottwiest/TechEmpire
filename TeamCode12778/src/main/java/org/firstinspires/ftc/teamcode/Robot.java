@@ -134,7 +134,10 @@ public class Robot {
     rightBackMotor.setPower(1);
     leftBackMotor.setPower(-1);
   }
-
+public void setTransportPower (double power){
+    transportLeft.setPower(power);
+    transportRight.setPower(power);
+}
   /*
    *  Method to perform a relative move, based on encoder counts.
    *  Encoders are not reset as the move is based on the current position.
