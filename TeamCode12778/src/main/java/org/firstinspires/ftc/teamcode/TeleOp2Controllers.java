@@ -94,17 +94,16 @@ public class TeleOp2Controllers  extends LinearOpMode {
             robot.leftBackMotor.setPower(leftBackPower);
             robot.rightBackMotor.setPower(rightBackPower);
             if (gamepad2.a) {
-                robot.runLauncher(this, 5, 1.0);
+                robot.setLauncherPower(1.0);
             }
             if (gamepad2.b) {
-                robot.runLauncher(this, 5, 0.5);
+                robot.setLauncherPower(0.5);
             }
             if (gamepad2.y) {
-                robot.runLauncher(this, 5, 0.25);
+                robot.setLauncherPower(0.25);
             }
             if (gamepad2.x) {
-                robot.leftLauncher.setPower(0);
-                robot.rightLauncher.setPower(0);
+                robot.setLauncherPower(0);
             }
             if (gamepad2.dpadUpWasPressed()) {
                 robot.intake.setPower(1);
@@ -120,17 +119,17 @@ public class TeleOp2Controllers  extends LinearOpMode {
                 robot.intake.setPower(0);
                 robot.setTransportPower(0);
             }
-            if (gamepad1.dpadLeftWasPressed()) {
-                robot.transportLeft.setPower(1);
+            if (gamepad2.dpadLeftWasPressed()) {
+                robot.transportBottom.setPower(1);
             }
-            if (gamepad1.dpadLeftWasReleased()) {
-                robot.transportLeft.setPower(0);
+            if (gamepad2.dpadLeftWasReleased()) {
+                robot.transportBottom.setPower(0);
             }
-            if (gamepad1.dpadRightWasPressed()) {
-                robot.transportRight.setPower(1);
+            if (gamepad2.dpadRightWasPressed()) {
+                robot.transportTop.setPower(1);
             }
-            if (gamepad1.dpadRightWasReleased()) {
-                robot.transportRight.setPower(0);
+            if (gamepad2.dpadRightWasReleased()) {
+                robot.transportTop.setPower(0);
             }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);

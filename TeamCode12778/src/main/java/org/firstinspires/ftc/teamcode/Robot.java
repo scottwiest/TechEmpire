@@ -18,8 +18,8 @@ public class Robot {
   DcMotor leftLauncher;
   DcMotor rightLauncher;
   DcMotor intake;
-  CRServo transportRight;
-  CRServo transportLeft;
+  CRServo transportTop;
+  CRServo transportBottom;
 
   static final double COUNTS_PER_TIRE_REV = 537.7;
   static final double WHEEL_DIAMETER_INCHES = 4.0;
@@ -36,8 +36,8 @@ public class Robot {
     leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
     rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
     intake = hardwareMap.get(DcMotor.class, "intake");
-    transportRight = hardwareMap.get(CRServo.class, "transportRight");
-    transportLeft = hardwareMap.get(CRServo.class, "transportLeft");
+    transportTop = hardwareMap.get(CRServo.class, "transportTop");
+    transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -48,8 +48,8 @@ public class Robot {
     rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
     leftLauncher.setDirection(DcMotor.Direction.REVERSE);
     rightLauncher.setDirection(DcMotor.Direction.FORWARD);
-    transportLeft.setDirection(CRServo.Direction.FORWARD);
-    transportRight.setDirection(CRServo.Direction.FORWARD);
+    transportBottom.setDirection(CRServo.Direction.FORWARD);
+    transportTop.setDirection(CRServo.Direction.FORWARD);
   }
 
   public void setRunUsingEncoder() {
@@ -83,10 +83,10 @@ public class Robot {
     telemetry.update();
   }
 
-  // public void setLauncherPower(double power) {
-  //   leftLauncher.setPower(power);
-  //   rightLauncher.setPower(power);
-  // }
+   public void setLauncherPower(double power) {
+     leftLauncher.setPower(power);
+     rightLauncher.setPower(power);
+   }
 
   public void runLauncher(LinearOpMode opMode, double numberOfRevolutions, double power) {
 
@@ -135,8 +135,8 @@ public class Robot {
     leftBackMotor.setPower(-1);
   }
 public void setTransportPower (double power){
-    transportLeft.setPower(power);
-    transportRight.setPower(power);
+    transportBottom.setPower(power);
+    transportTop.setPower(power);
 }
   /*
    *  Method to perform a relative move, based on encoder counts.
