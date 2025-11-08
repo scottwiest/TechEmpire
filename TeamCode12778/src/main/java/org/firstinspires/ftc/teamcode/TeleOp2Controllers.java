@@ -133,6 +133,11 @@ public class TeleOp2Controllers  extends LinearOpMode {
             if (gamepad2.dpadUpWasReleased()) {
                 robot.transportTop.setPower(0);
             }
+            if (gamepad2.right_bumper()) {
+                robot.transportTop.setPower(-0.5);
+                robot.transportBottom.setPOwer(-0.5);
+                robot.setLauncherPower(-0.5);
+            }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
             telemetry.addData("Front left/Right", JavaUtil.formatNumber(leftFrontPower, 4, 2) + ", " + JavaUtil.formatNumber(rightFrontPower, 4, 2));
