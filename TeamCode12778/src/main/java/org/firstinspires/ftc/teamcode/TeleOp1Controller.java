@@ -81,7 +81,7 @@ public class TeleOp1Controller extends LinearOpMode {
                 Drive_Speed = 0.5;
             }
             if (gamepad1.right_bumper) {
-                Drive_Speed = 1;
+                Drive_Speed = 0.75;
             }
             if (max > Drive_Speed) {
                 leftFrontPower = leftFrontPower / max;
