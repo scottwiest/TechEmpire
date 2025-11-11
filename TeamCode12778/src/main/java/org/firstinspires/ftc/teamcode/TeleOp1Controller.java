@@ -76,17 +76,17 @@ public class TeleOp1Controller extends LinearOpMode {
             // Normalize the values so no wheel power exceeds 50%
             // This ensures that the robot maintains the desired motion.
             max = JavaUtil.maxOfList(JavaUtil.createListWith(Math.abs(leftFrontPower), Math.abs(rightFrontPower), Math.abs(leftBackPower), Math.abs(rightBackPower)));
-            if (max > 0.5) {
+            if (max > 1.0) {
                 leftFrontPower = leftFrontPower / max;
                 rightFrontPower = rightFrontPower / max;
                 leftBackPower = leftBackPower / max;
                 rightBackPower = rightBackPower / max;
             }
             // Send calculated power to wheels.
-            robot.leftFrontMotor.setPower(leftFrontPower);
-            robot.rightFrontMotor.setPower(rightFrontPower);
-            robot.leftBackMotor.setPower(leftBackPower);
-            robot.rightBackMotor.setPower(rightBackPower);
+            robot.leftFrontMotor.setPower(leftFrontPower * 0.5);
+            robot.rightFrontMotor.setPower(rightFrontPower * 0.5);
+            robot.leftBackMotor.setPower(leftBackPower * 0.5);
+            robot.rightBackMotor.setPower(rightBackPower * 0.5);
             if (gamepad1.a) {
                 robot.setLauncherPower(1.0);
             }
