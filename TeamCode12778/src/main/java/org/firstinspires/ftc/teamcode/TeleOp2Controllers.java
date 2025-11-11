@@ -105,7 +105,7 @@ public class TeleOp2Controllers  extends LinearOpMode {
             if (gamepad2.x) {
                 robot.setLauncherPower(0);
             }
-            if (gamepad2.dpadRighpWasPressed()) {
+            if (gamepad2.dpadRightWasPressed()) {
                 robot.intake.setPower(1);
                 robot.transportBottom.setPower(1);
             }
@@ -127,15 +127,15 @@ public class TeleOp2Controllers  extends LinearOpMode {
             if (gamepad2.dpadLeftWasReleased()) {
                 robot.transportBottom.setPower(0);
             }
-            if (gamepad2.dpadUpPressed()) {
+            if (gamepad2.dpadUpWasPressed()) {
                 robot.transportTop.setPower(1);
             }
             if (gamepad2.dpadUpWasReleased()) {
                 robot.transportTop.setPower(0);
             }
-            if (gamepad2.right_bumper()) {
+            if (gamepad2.right_bumper) {
                 robot.transportTop.setPower(-0.5);
-                robot.transportBottom.setPOwer(-0.5);
+                robot.transportBottom.setPower(-0.5);
                 robot.setLauncherPower(-0.5);
             }
             // Show the elapsed game time and wheel power.
