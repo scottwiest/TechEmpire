@@ -104,10 +104,12 @@ public class TeleOp2Controllers  extends LinearOpMode {
             }
             if (gamepad2.dpadRightWasReleased()) {
                 robot.intake.setPower(0);
+                robot.transportBottom.setPower(0);
 
              }
             if (gamepad2.dpadDownWasPressed()) {
                 robot.intake.setPower(1);
+                robot.setTransportPower(1);
                 
             }
             if (gamepad2.dpadDownWasReleased()) {
@@ -122,21 +124,28 @@ public class TeleOp2Controllers  extends LinearOpMode {
             }
             if (gamepad2.dpadUpWasPressed()) {
                 robot.transportTop.setPower(1);
-                robot.intake.setPower(1);
             }
             if (gamepad2.dpadUpWasReleased()) {
                 robot.transportTop.setPower(0);
-                robot.intake.setPower(0);
             }
-            if (gamepad2.right_bumper) {
+            if (gamepad2.rightBumperWasPressed()) {
                 robot.transportTop.setPower(-0.5);
                 robot.transportBottom.setPower(-0.5);
-                robot.setLauncherPower(-0.5);
+                robot.setLauncherPower(-0.2);
+            }
+            if (gamepad2.rightBumperWasReleased()) {
+                robot.transportTop.setPower(0);
+                robot.transportBottom.setPower(0);
+                robot.setLauncherPower(0);
             }
             if (gamepad1.right_trigger > 0.5){
                 robot.transportTop.setPower(-1);
                 robot.transportBottom.setPower(-1);
                 robot.setLauncherPower(-0.25);
+            }else {
+                robot.transportTop.setPower(0);
+                robot.transportBottom.setPower(0);
+                robot.setLauncherPower(0);
             }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
