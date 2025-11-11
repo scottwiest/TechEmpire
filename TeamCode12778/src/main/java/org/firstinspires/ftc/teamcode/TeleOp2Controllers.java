@@ -63,7 +63,6 @@ public class TeleOp2Controllers  extends LinearOpMode {
         while (opModeIsActive()) {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             // Note: pushing stick forward gives negative value
-            double Drive_Speed = 1;
             axial = gamepad1.right_stick_y;
             lateral = gamepad1.right_stick_x;
             yaw = gamepad1.left_stick_x;
@@ -73,16 +72,10 @@ public class TeleOp2Controllers  extends LinearOpMode {
             rightFrontPower = (axial - lateral) - yaw;
             leftBackPower = (axial - lateral) + yaw;
             rightBackPower = (axial + lateral) - yaw;
-            // Normalize the values so no wheel power exceeds 100%
+            // Normalize the values so no wheel power exceeds 50%
             // This ensures that the robot maintains the desired motion.
             max = JavaUtil.maxOfList(JavaUtil.createListWith(Math.abs(leftFrontPower), Math.abs(rightFrontPower), Math.abs(leftBackPower), Math.abs(rightBackPower)));
-            if (gamepad1.a) {
-                Drive_Speed = 0.5;
-            }
-            if (gamepad1.b) {
-                Drive_Speed = 1;
-            }
-            if (max > Drive_Speed) {
+            if (max > 0.5) {
                 leftFrontPower = leftFrontPower / max;
                 rightFrontPower = rightFrontPower / max;
                 leftBackPower = leftBackPower / max;

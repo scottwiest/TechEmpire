@@ -64,7 +64,6 @@ public class TeleOp1Controller extends LinearOpMode {
         while (opModeIsActive()) {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             // Note: pushing stick forward gives negative value
-            double Drive_Speed = 1;
             axial = gamepad1.right_stick_y;
             lateral = gamepad1.right_stick_x;
             yaw = gamepad1.left_stick_x;
@@ -74,16 +73,10 @@ public class TeleOp1Controller extends LinearOpMode {
             rightFrontPower = (axial - lateral) - yaw;
             leftBackPower = (axial - lateral) + yaw;
             rightBackPower = (axial + lateral) - yaw;
-            // Normalize the values so no wheel power exceeds 100%
+            // Normalize the values so no wheel power exceeds 50%
             // This ensures that the robot maintains the desired motion.
             max = JavaUtil.maxOfList(JavaUtil.createListWith(Math.abs(leftFrontPower), Math.abs(rightFrontPower), Math.abs(leftBackPower), Math.abs(rightBackPower)));
-            if (gamepad1.left_bumper) {
-                Drive_Speed = 0.5;
-            }
-            if (gamepad1.right_bumper) {
-                Drive_Speed = 0.75;
-            }
-            if (max > Drive_Speed) {
+            if (max > 0.5) {
                 leftFrontPower = leftFrontPower / max;
                 rightFrontPower = rightFrontPower / max;
                 leftBackPower = leftBackPower / max;
@@ -94,29 +87,29 @@ public class TeleOp1Controller extends LinearOpMode {
             robot.rightFrontMotor.setPower(rightFrontPower);
             robot.leftBackMotor.setPower(leftBackPower);
             robot.rightBackMotor.setPower(rightBackPower);
-            if (gamepad1.y) {
+            if (gamepad1.a) {
                 robot.setLauncherPower(1.0);
             }
             if (gamepad1.b) {
                 robot.setLauncherPower(0.5);
             }
-            if (gamepad1.a) {
+            if (gamepad1.y) {
                 robot.setLauncherPower(0.25);
             }
             if (gamepad1.x) {
                 robot.setLauncherPower(0);
             }
-            if (gamepad1.dpadUpWasPressed()) {
+            if (gamepad1.dpadRightWasPressed()) {
                 robot.intake.setPower(1);
                 robot.transportBottom.setPower(1);
             }
-            if (gamepad1.dpadUpWasReleased()) {
+            if (gamepad1.dpadRightWasReleased()) {
                 robot.intake.setPower(0);
                 robot.transportBottom.setPower(0);
             }
             if (gamepad1.dpadDownWasPressed()) {
-                robot.intake.setPower(0);
-                robot.setTransportPower(0);
+                robot.intake.setPower(1);
+                robot.setTransportPower(1);
             }
             if (gamepad1.dpadDownWasReleased()) {
                 robot.intake.setPower(0);
@@ -128,11 +121,19 @@ public class TeleOp1Controller extends LinearOpMode {
             if (gamepad1.dpadLeftWasReleased()) {
                 robot.transportBottom.setPower(0);
             }
-            if (gamepad1.dpadRightWasPressed()) {
+            if (gamepad1.dpadUpWasPressed()) {
                 robot.transportTop.setPower(1);
             }
-            if (gamepad1.dpadRightWasReleased()) {
+            if (gamepad1.dpadUpWasReleased()) {
                 robot.transportTop.setPower(0);
+            }
+            if (gamepad1.right_bumper) {
+                robot.setLauncherPower(-0.25);
+            }
+            if (gamepad1.right_trigger > 0.5){
+                robot.transportTop.setPower(-1);
+                robot.transportBottom.setPower(-1);
+                robot.setLauncherPower(-0.25);
             }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime);
