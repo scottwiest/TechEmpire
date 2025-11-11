@@ -104,11 +104,11 @@ public class TeleOp2Controllers  extends LinearOpMode {
             }
             if (gamepad2.dpadRightWasReleased()) {
                 robot.intake.setPower(0);
-                robot.transportBottom.setPower(0);
-            }
+
+             }
             if (gamepad2.dpadDownWasPressed()) {
                 robot.intake.setPower(1);
-                robot.setTransportPower(1);
+                
             }
             if (gamepad2.dpadDownWasReleased()) {
                 robot.intake.setPower(0);
@@ -122,9 +122,11 @@ public class TeleOp2Controllers  extends LinearOpMode {
             }
             if (gamepad2.dpadUpWasPressed()) {
                 robot.transportTop.setPower(1);
+                robot.intake.setPower(1);
             }
             if (gamepad2.dpadUpWasReleased()) {
                 robot.transportTop.setPower(0);
+                robot.intake.setPower(0)
             }
             if (gamepad2.right_bumper) {
                 robot.transportTop.setPower(-0.5);
