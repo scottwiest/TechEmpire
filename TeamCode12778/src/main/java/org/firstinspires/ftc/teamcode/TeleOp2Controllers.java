@@ -133,11 +133,6 @@ public class TeleOp2Controllers  extends LinearOpMode {
                 robot.transportBottom.setPower(-0.5);
                 robot.setLauncherPower(-0.2);
             }
-            if (gamepad2.rightBumperWasReleased()) {
-                robot.transportTop.setPower(0);
-                robot.transportBottom.setPower(0);
-                robot.setLauncherPower(0);
-            }
             if (gamepad1.right_trigger > 0.5){
                 robot.transportTop.setPower(-1);
                 robot.transportBottom.setPower(-1);
