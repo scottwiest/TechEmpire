@@ -134,6 +134,12 @@ public class Robot {
     rightBackMotor.setPower(1);
     leftBackMotor.setPower(-1);
   }
+  public void stopMotors() {
+    rightFrontMotor.setPower(0);
+    leftFrontMotor.setPower(0);
+    rightBackMotor.setPower(0);
+    leftBackMotor.setPower(0);
+  }
 public void setTransportPower (double power){
     transportBottom.setPower(power);
     transportTop.setPower(power);
