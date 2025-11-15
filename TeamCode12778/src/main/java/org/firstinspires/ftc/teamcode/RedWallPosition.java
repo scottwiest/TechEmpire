@@ -32,43 +32,48 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Red Wall Position")
+@Autonomous(name = "Red Wall Position")
 public class RedWallPosition extends LinearOpMode {
-    private final Robot robot = new Robot();
 
-    @Override
-    public void runOpMode() {
-        robot.initializeMotors(hardwareMap);
-        robot.setRunUsingEncoder();
+  private final Robot robot = new Robot();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
+  @Override
+  public void runOpMode() {
+    robot.initializeMotors(hardwareMap);
+    robot.setRunUsingEncoder();
 
-        // Wait for the game to start (driver presses START)
-        waitForStart();
+    // Send telemetry message to indicate successful Encoder reset
+    robot.logCurrentPosition(telemetry);
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5,  36,  36, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
-        robot.runDriveInstructions(this, 0.6,   24, -24, 4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
+    // Wait for the game to start (driver presses START)
+    waitForStart();
 
-        // shoot artifact code here
-        robot.transportTop.setPower(1);
-        sleep(1000);
-        robot.setLauncherPower(1);
-        sleep(2000);
-        robot.intake.setPower(1);
-        robot.transportBottom.setPower(1);
-        robot.intake.setPower(0);
-        robot.setTransportPower(0);
-        robot.setLauncherPower(0);
+    // Step through each leg of the path,
+    // Note: Reverse movement is obtained by setting a negative distance (not speed)
+    robot.runDriveInstructions(this, 0.5, -65, -65,
+        5.0); // S1: Forward 72 Inches with 5 Sec timeout
+    robot.runDriveInstructions(this, 0.6, 12, -12,
+        4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
 
-        robot.stopMotorEncoder();
+    // shoot artifact code here
+    robot.setLauncherPower(0.25);
+    sleep(1000);
+    robot.transportTop.setPower(1);
+    sleep(2000);
+    robot.intake.setPower(1);
+    robot.transportBottom.setPower(1);
+    sleep(3000);
+    robot.intake.setPower(0);
+    robot.setTransportPower(0);
+    robot.setLauncherPower(0);
 
-        robot.rightStrafe();
-        sleep(1500);
+    robot.stopMotorEncoder();
 
-        robot.logPathCompleted(telemetry);
-        sleep(1000);  // pause to display final telemetry message.
-    }
+    robot.rightStrafe();
+    sleep(250);
+    robot.stopMotors();
+
+    robot.logPathCompleted(telemetry);
+    sleep(1000);  // pause to display final telemetry message.
+  }
 }
