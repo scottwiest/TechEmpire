@@ -87,13 +87,13 @@ public class TeleOp2Controllers  extends LinearOpMode {
             robot.leftBackMotor.setPower(leftBackPower * 0.5);
             robot.rightBackMotor.setPower(rightBackPower * 0.5);
             if (gamepad2.a) {
-                robot.setLauncherPower(0.7);
+                robot.setLauncherPower(0.5);
             }
             if (gamepad2.b) {
-                robot.setLauncherPower(0.4);
+                robot.setLauncherPower(0.3);
             }
             if (gamepad2.y) {
-                robot.setLauncherPower(0.3);
+                robot.setLauncherPower(0.25);
             }
             if (gamepad2.x) {
                 robot.setLauncherPower(0);

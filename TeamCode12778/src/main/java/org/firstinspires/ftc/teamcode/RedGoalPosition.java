@@ -49,12 +49,18 @@ public class RedGoalPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, -0.5,  24,  24, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        robot.runDriveInstructions(this, -0.5,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
         // shoot artifact code here
-        robot.setTransportPower(1);
-        robot.runLauncher(this, 5, 0.5);
+        robot.setLauncherPower(0.3);
+        robot.transportTop.setPower(1);
+        sleep(1500);
+        robot.intake.setPower(1);
+        robot.transportBottom.setPower(1);
+        sleep(2500);
+        robot.intake.setPower(0);
         robot.setTransportPower(0);
+        robot.setLauncherPower(0);
 
         robot.runDriveInstructions(this, 0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
         robot.runDriveInstructions(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
