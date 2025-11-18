@@ -49,16 +49,16 @@ public class RedWallPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5,  36,  36, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
-        robot.runDriveInstructions(this, 0.6,   24, -24, 4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
+        robot.runDriveInstructions(this, 0.5,  -62,  -62, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
+        robot.runDriveInstructions(this, 0.6,   12, -24, 4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
 
         // shoot artifact code here
+        robot.setLauncherPower(0.3);
         robot.transportTop.setPower(1);
-        sleep(1000);
-        robot.setLauncherPower(1);
-        sleep(2000);
+        sleep(1500);
         robot.intake.setPower(1);
         robot.transportBottom.setPower(1);
+        sleep(2500);
         robot.intake.setPower(0);
         robot.setTransportPower(0);
         robot.setLauncherPower(0);
@@ -66,7 +66,8 @@ public class RedWallPosition extends LinearOpMode {
         robot.stopMotorEncoder();
 
         robot.rightStrafe();
-        sleep(1500);
+        sleep(250);
+        robot.stopMotors();
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
