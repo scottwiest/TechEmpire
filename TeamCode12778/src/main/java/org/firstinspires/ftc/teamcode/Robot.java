@@ -88,32 +88,22 @@ public class Robot {
      rightLauncher.setPower(power);
    }
 
-  public void runLauncher(LinearOpMode opMode, double numberOfRevolutions, double power) {
+   public void setLauncherVelocity (double targetVelocityPower) { 
+    leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    
+    double targetVelocityTPS = (2800 * targetVelocityPower);
+    motorEx.setVelocity(targetVelocityTPS);
+    double velocityTolerance = 28.0; // Define an acceptable range (in TPS)
+// Loop while the Opmode is active AND the current velocity is NOt within the tolerance
+     while (OpmodeIsActive() && (Math.abs(leftLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance || 
+            Maths.abs(rightLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance)) {
 
-    int leftLauncherTarget = leftLauncher.getCurrentPosition() + (int)(numberOfRevolutions * COUNTS_PER_LAUNCHER_REV);
-    int rightLauncherTarget = rightLauncher.getCurrentPosition() + (int)(numberOfRevolutions * COUNTS_PER_LAUNCHER_REV);
-
-    leftLauncher.setTargetPosition(leftLauncherTarget);
-    rightLauncher.setTargetPosition(rightLauncherTarget);
-
-    leftLauncher.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    rightLauncher.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    leftLauncher.setPower(power);
-    rightLauncher.setPower(power);
-    while (opMode.opModeIsActive() && leftLauncher.isBusy() && rightLauncher.isBusy()) {
-      opMode.telemetry.addData("Running to",  " LL:%7d RL:%7d",
-          leftLauncherTarget, rightLauncherTarget);
-      opMode.telemetry.addData("Currently at",  " at LL:%7d RL:%7d",
-          leftLauncher.getCurrentPosition(),
-          rightLauncher.getCurrentPosition());
-      opMode.telemetry.update();
-    }
+     }
+     
 
     leftLauncher.setPower(0);
     rightLauncher.setPower(0);
-
-    leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
   }
 
   public void stopMotorEncoder() {
