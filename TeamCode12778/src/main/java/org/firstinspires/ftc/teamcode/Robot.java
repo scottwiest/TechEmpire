@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -15,8 +16,8 @@ public class Robot {
   DcMotor rightFrontMotor;
   DcMotor leftBackMotor;
   DcMotor rightBackMotor;
-  DcMotor leftLauncher;
-  DcMotor rightLauncher;
+  DcMotorEx leftLauncher;
+  DcMotorEx rightLauncher;
   DcMotor intake;
   CRServo transportTop;
   CRServo transportBottom;
@@ -24,7 +25,7 @@ public class Robot {
   static final double COUNTS_PER_TIRE_REV = 537.7;
   static final double WHEEL_DIAMETER_INCHES = 4.0;
   static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
-  
+
   static final double COUNTS_PER_LAUNCHER_REV = 28;
 
   public void initializeMotors(HardwareMap hardwareMap) {
@@ -33,8 +34,8 @@ public class Robot {
     rightFrontMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
     leftBackMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
     rightBackMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
-    leftLauncher = hardwareMap.get(DcMotor.class, "leftLauncher");
-    rightLauncher = hardwareMap.get(DcMotor.class, "rightLauncher");
+    leftLauncher = (DcMotorEx) hardwareMap.get(DcMotor.class, "leftLauncher");
+    rightLauncher = (DcMotorEx) hardwareMap.get(DcMotor.class, "rightLauncher");
     intake = hardwareMap.get(DcMotor.class, "intake");
     transportTop = hardwareMap.get(CRServo.class, "transportTop");
     transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
@@ -70,7 +71,7 @@ public class Robot {
 
   public void logCurrentPosition(Telemetry telemetry) {
     // Send telemetry message to indicate successful Encoder reset
-    telemetry.addData("Starting at",  "LF:%7d RF:%7d LB:%7d RB:%7d",
+    telemetry.addData("Starting at", "LF:%7d RF:%7d LB:%7d RB:%7d",
         leftFrontMotor.getCurrentPosition(),
         rightFrontMotor.getCurrentPosition(),
         leftBackMotor.getCurrentPosition(),
@@ -83,27 +84,27 @@ public class Robot {
     telemetry.update();
   }
 
-   public void setLauncherPower(double power) {
-     leftLauncher.setPower(power);
-     rightLauncher.setPower(power);
-   }
+  public void setLauncherPower(double power) {
+    leftLauncher.setPower(power);
+    rightLauncher.setPower(power);
+  }
 
-   public void setLauncherVelocity (double targetVelocityPower) { 
+  public void setLauncherVelocity(LinearOpMode opMode, double targetVelocityPower) {
     leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    
+
+    // Convert Power level to ticks per second
     double targetVelocityTPS = (2800 * targetVelocityPower);
-    motorEx.setVelocity(targetVelocityTPS);
+    leftLauncher.setVelocity(targetVelocityTPS);
+    rightLauncher.setVelocity(targetVelocityTPS);
     double velocityTolerance = 28.0; // Define an acceptable range (in TPS)
-// Loop while the Opmode is active AND the current velocity is NOt within the tolerance
-     while (OpmodeIsActive() && (Math.abs(leftLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance || 
-            Maths.abs(rightLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance)) {
-
-     }
-     
-
-    leftLauncher.setPower(0);
-    rightLauncher.setPower(0);
+    // Don't return until the velocity is reached
+    while (opMode.opModeIsActive() &&
+        (Math.abs(leftLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance
+            || Math.abs(rightLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance)
+    ) {
+      opMode.sleep(10);
+    }
   }
 
   public void stopMotorEncoder() {
@@ -112,28 +113,33 @@ public class Robot {
     rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
   }
+
   public void rightStrafe() {
     rightFrontMotor.setPower(1);
     leftFrontMotor.setPower(-1);
     rightBackMotor.setPower(-1);
     leftBackMotor.setPower(1);
   }
+
   public void leftStrafe() {
     rightFrontMotor.setPower(-1);
     leftFrontMotor.setPower(1);
     rightBackMotor.setPower(1);
     leftBackMotor.setPower(-1);
   }
+
   public void stopMotors() {
     rightFrontMotor.setPower(0);
     leftFrontMotor.setPower(0);
     rightBackMotor.setPower(0);
     leftBackMotor.setPower(0);
   }
-public void setTransportPower (double power){
+
+  public void setTransportPower(double power) {
     transportBottom.setPower(power);
     transportTop.setPower(power);
-}
+  }
+
   /*
    *  Method to perform a relative move, based on encoder counts.
    *  Encoders are not reset as the move is based on the current position.
@@ -143,11 +149,11 @@ public void setTransportPower (double power){
    *  3) Driver stops the OpMode running.
    */
   public void runDriveInstructions(
-          LinearOpMode opMode,
-          double speed,
-          double leftInches,
-          double rightInches,
-          double timeoutS
+      LinearOpMode opMode,
+      double speed,
+      double leftInches,
+      double rightInches,
+      double timeoutS
   ) {
     int newLeftFrontTarget;
     int newRightFrontTarget;
@@ -158,10 +164,13 @@ public void setTransportPower (double power){
     if (opMode.opModeIsActive()) {
 
       // Determine new target position, and pass to motor controller
-      newLeftFrontTarget = leftFrontMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-      newRightFrontTarget = rightFrontMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-      newLeftBackTarget = leftBackMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-      newRightBackTarget = rightBackMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+      newLeftFrontTarget =
+          leftFrontMotor.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+      newRightFrontTarget =
+          rightFrontMotor.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+      newLeftBackTarget = leftBackMotor.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+      newRightBackTarget =
+          rightBackMotor.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
       leftFrontMotor.setTargetPosition(newLeftFrontTarget);
       rightFrontMotor.setTargetPosition(newRightFrontTarget);
       leftBackMotor.setTargetPosition(newLeftBackTarget);
@@ -188,12 +197,13 @@ public void setTransportPower (double power){
       // onto the next step, use (isBusy() || isBusy()) in the loop test.
       while (opMode.opModeIsActive() &&
           (runtime.seconds() < timeoutS) &&
-          (leftFrontMotor.isBusy() && rightFrontMotor.isBusy() && leftBackMotor.isBusy() && rightBackMotor.isBusy())) {
+          (leftFrontMotor.isBusy() && rightFrontMotor.isBusy() && leftBackMotor.isBusy()
+              && rightBackMotor.isBusy())) {
 
         // Display it for the driver.
-        opMode.telemetry.addData("Running to",  " LF:%7d RF:%7d LB:%7d RB:%7d",
+        opMode.telemetry.addData("Running to", " LF:%7d RF:%7d LB:%7d RB:%7d",
             newLeftFrontTarget, newRightFrontTarget, newLeftBackTarget, newRightBackTarget);
-        opMode.telemetry.addData("Currently at",  " at LF:%7d RF:%7d LB:%7d RB:%7d",
+        opMode.telemetry.addData("Currently at", " at LF:%7d RF:%7d LB:%7d RB:%7d",
             leftFrontMotor.getCurrentPosition(),
             rightFrontMotor.getCurrentPosition(),
             leftBackMotor.getCurrentPosition(),
