@@ -47,10 +47,10 @@ public class BlueWallPosition extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5,  -62,  -62, 5.0);
-        robot.runDriveInstructions(this, 0.5,  -12,  12, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
+    // Step through each leg of the path,
+    // Note: Reverse movement is obtained by setting a negative distance (not speed)
+    robot.runDriveInstructions(this, 0.5, -65, -65, 5.0);
+    robot.runDriveInstructions(this, 0.5, -12, 12, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
 
         // shoot artifact code here
         robot.setLauncherPower(0.3);
