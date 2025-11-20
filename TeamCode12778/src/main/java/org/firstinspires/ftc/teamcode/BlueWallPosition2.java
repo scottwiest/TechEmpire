@@ -32,9 +32,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Red Goal Position")
-public class RedGoalPosition extends LinearOpMode {
-    private final Robot robot = new Robot();
+@Autonomous(name = "Blue Wall Position 2")
+public class BlueWallPosition2 extends LinearOpMode {
+
+  private final Robot robot = new Robot();
 
     @Override
     public void runOpMode() {
@@ -47,23 +48,29 @@ public class RedGoalPosition extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, -0.5,  24,  24, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+    // Step through each leg of the path,
+    // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        robot.runDriveInstructions(this, 0.5, -24, 24, 5.0);
+        robot.runDriveInstructions(this, 0.5, -20, -20, 5.0);
+        robot.runDriveInstructions(this, 0.5, 24, -24, 5.0);
+        robot.runDriveInstructions(this, 0.5, -85, -85, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
 
-        // shoot artifact code here
-        robot.setLauncherVelocity(this, 0.1);
-        robot.transportTop.setPower(1);
-        robot.setLauncherVelocity(this, 0.2);
-        robot.intake.setPower(1);
-        robot.transportBottom.setPower(1);
-        sleep(3000);
-        robot.intake.setPower(0);
-        robot.setTransportPower(0);
-        robot.setLauncherPower(0);
+    // shoot artifact code here
+    robot.setLauncherVelocity(this, 0.05);
+    robot.transportTop.setPower(1);
+    robot.setLauncherVelocity(this, 0.15);
+    robot.intake.setPower(1);
+    robot.transportBottom.setPower(1);
+    sleep(3000);
+    robot.intake.setPower(0);
+    robot.setTransportPower(0);
+    robot.setLauncherPower(0);
 
-        robot.runDriveInstructions(this, 0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
-        robot.runDriveInstructions(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        robot.stopMotorEncoder();
+
+        robot.leftStrafe();
+        sleep(250);
+        robot.stopMotors();
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.

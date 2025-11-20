@@ -52,12 +52,12 @@ public class BlueGoalPosition extends LinearOpMode {
         robot.runDriveInstructions(this, -0.5,  24,  24, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
 
         // shoot artifact code here
+        robot.setLauncherVelocity(this, 0.1);
         robot.transportTop.setPower(1);
-        sleep(1000);
-        robot.setLauncherPower(1);
-        sleep(2000);
+        robot.setLauncherVelocity(this, 0.2);
         robot.intake.setPower(1);
         robot.transportBottom.setPower(1);
+        sleep(3000);
         robot.intake.setPower(0);
         robot.setTransportPower(0);
         robot.setLauncherPower(0);

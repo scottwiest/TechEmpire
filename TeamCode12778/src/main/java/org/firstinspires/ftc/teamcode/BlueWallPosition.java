@@ -52,10 +52,9 @@ public class BlueWallPosition extends LinearOpMode {
     // Note: Reverse movement is obtained by setting a negative distance (not speed)
         robot.runDriveInstructions(this, 0.5, -65, -65, 5.0);
         robot.runDriveInstructions(this, 0.5, -12, 12, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
-        robot.runDriveInstructions(this,0.5,6,6,5.0);
 
     // shoot artifact code here
-    robot.setLauncherVelocity(this, 0.25);
+    robot.setLauncherVelocity(this, 0.15);
     robot.transportTop.setPower(1);
     robot.setLauncherVelocity(this, 0.25);
     robot.intake.setPower(1);
