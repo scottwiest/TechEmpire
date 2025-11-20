@@ -32,9 +32,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Blue Wall Position")
+@Autonomous(name = "Blue Wall Position")
 public class BlueWallPosition extends LinearOpMode {
-    private final Robot robot = new Robot();
+
+  private final Robot robot = new Robot();
 
     @Override
     public void runOpMode() {
@@ -53,22 +54,16 @@ public class BlueWallPosition extends LinearOpMode {
         robot.runDriveInstructions(this, 0.5, -12, 12, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
         robot.runDriveInstructions(this,0.5,6,6,5.0);
 
-        // shoot artifact code here
-        robot.setLauncherPower(0.3);
-        sleep(1000);
-        robot.transportTop.setPower(1);
-        sleep(1500);
-        robot.transportTop.setPower(0);
-        sleep(500);
-        robot.intake.setPower(1);
-        robot.transportBottom.setPower(1);
-        robot.setLauncherPower(0.33);
-        sleep(3000);
-        robot.transportTop.setPower(1);
-        sleep(3500);
-        robot.intake.setPower(0);
-        robot.setTransportPower(0);
-        robot.setLauncherPower(0);
+    // shoot artifact code here
+    robot.setLauncherVelocity(this, 0.25);
+    robot.transportTop.setPower(1);
+    robot.setLauncherVelocity(this, 0.25);
+    robot.intake.setPower(1);
+    robot.transportBottom.setPower(1);
+    sleep(3000);
+    robot.intake.setPower(0);
+    robot.setTransportPower(0);
+    robot.setLauncherPower(0);
 
         robot.stopMotorEncoder();
 
