@@ -54,15 +54,21 @@ public class RedWallPosition extends LinearOpMode {
         5.0); // S1: Forward 72 Inches with 5 Sec timeout
     robot.runDriveInstructions(this, 0.6, 12, -12,
         4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
+    robot.runDriveInstructions(this,0.5,6,6,5.0);
 
     // shoot artifact code here
-    robot.setLauncherPower(0.25);
+    robot.setLauncherPower(0.3);
     sleep(1000);
     robot.transportTop.setPower(1);
-    sleep(2000);
+    sleep(1500);
+    robot.transportTop.setPower(0);
+    sleep(500);
     robot.intake.setPower(1);
     robot.transportBottom.setPower(1);
+    robot.setLauncherPower(0.33);
     sleep(3000);
+    robot.transportTop.setPower(1);
+    sleep(3500);
     robot.intake.setPower(0);
     robot.setTransportPower(0);
     robot.setLauncherPower(0);
