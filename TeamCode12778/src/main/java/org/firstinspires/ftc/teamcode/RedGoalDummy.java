@@ -53,10 +53,6 @@ public class RedGoalDummy extends LinearOpMode {
 
         // shoot artifact code here
 
-
-        robot.runDriveInstructions(this, 0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
-        robot.runDriveInstructions(this, 0.5, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
