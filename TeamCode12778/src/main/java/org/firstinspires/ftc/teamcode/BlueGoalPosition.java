@@ -49,7 +49,7 @@ public class BlueGoalPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, -0.5,  35,  35, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
+        robot.runDriveInstructions(this, 0.5,  -35,  -35, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
 
         // shoot artifact code here
         robot.setLauncherVelocity(this, 0.07);
@@ -65,7 +65,7 @@ public class BlueGoalPosition extends LinearOpMode {
 
         sleep(2500);
         robot.runDriveInstructions(this, 0.6,   20, -20, 4.0);  // S2: Turn Right 15 Inches with 4 Sec timeout
-        robot.runDriveInstructions(this, 0.5, 18, 18, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        robot.runDriveInstructions(this, 0.5, -18, -18, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.

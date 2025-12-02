@@ -129,14 +129,14 @@ public class Robot {
     leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
   }
 
-  public void rightStrafe() {
+  public void leftStrafe() {
     rightFrontMotor.setPower(1);
     leftFrontMotor.setPower(-1);
     rightBackMotor.setPower(-1);
     leftBackMotor.setPower(1);
   }
 
-  public void leftStrafe() {
+  public void rightStrafe() {
     rightFrontMotor.setPower(-1);
     leftFrontMotor.setPower(1);
     rightBackMotor.setPower(1);

@@ -50,8 +50,7 @@ public class RedWallDummy extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5, -16, -16,
-                5.0); // S1: Forward 72 Inches with 5 Sec timeout
+        robot.runDriveInstructions(this, 0.5, 16, 16, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
 
         robot.stopMotors();
 
