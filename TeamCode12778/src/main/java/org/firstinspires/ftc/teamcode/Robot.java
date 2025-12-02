@@ -90,19 +90,34 @@ public class Robot {
   }
 
   public void setLauncherVelocity(LinearOpMode opMode, double targetVelocityPower) {
+    // Motor constants for goBILDA 5202
+    final double MAX_MOTOR_TPS = 2800.0;
+
     leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-    // Convert Power level to ticks per second
-    double targetVelocityTPS = (2800 * targetVelocityPower);
+    double targetVelocityTPS = (MAX_MOTOR_TPS * targetVelocityPower);
+
     leftLauncher.setVelocity(targetVelocityTPS);
     rightLauncher.setVelocity(targetVelocityTPS);
-    double velocityTolerance = 28.0; // Define an acceptable range (in TPS)
-    // Don't return until the velocity is reached
-    while (opMode.opModeIsActive() &&
-        (Math.abs(leftLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance
-            || Math.abs(rightLauncher.getVelocity() - targetVelocityTPS) > velocityTolerance)
-    ) {
+
+    // Dynamic Tolerance Parameters
+    final double MIN_ABS_TOLERANCE = 5.0; // Always be within at least 5 TPS
+    final double PERCENT_TOLERANCE = 0.01; // 1% of the target velocity
+
+    // Calculate the tolerance required for this specific velocity
+    double requiredTolerance = Math.max(MIN_ABS_TOLERANCE,
+        Math.abs(targetVelocityTPS) * PERCENT_TOLERANCE);
+
+    // Don't return until the velocity is reached for BOTH motors
+    while (opMode.opModeIsActive()) {
+      double leftError = Math.abs(leftLauncher.getVelocity() - targetVelocityTPS);
+      double rightError = Math.abs(rightLauncher.getVelocity() - targetVelocityTPS);
+
+      if (leftError <= requiredTolerance && rightError <= requiredTolerance) {
+        break; // Exit the loop only when both motors are in tolerance
+      }
+
       opMode.sleep(10);
     }
   }
