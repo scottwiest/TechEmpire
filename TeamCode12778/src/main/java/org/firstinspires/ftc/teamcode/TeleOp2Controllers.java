@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 @TeleOp(name = "TeleOp2Controllers")
 public class TeleOp2Controllers  extends LinearOpMode {
-    private final Robot robot = new Robot();
+    private final Robot robot = new Robot(this);
 
     double leftFrontPower;
     double leftBackPower;
@@ -63,8 +63,8 @@ public class TeleOp2Controllers  extends LinearOpMode {
         while (opModeIsActive()) {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             // Note: pushing stick forward gives negative value
-            axial = gamepad1.right_stick_y;
-            lateral = - gamepad1.right_stick_x;
+            axial = - gamepad1.right_stick_y;
+            lateral = gamepad1.right_stick_x;
             yaw = gamepad1.left_stick_x;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.

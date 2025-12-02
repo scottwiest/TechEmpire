@@ -22,11 +22,17 @@ public class Robot {
   CRServo transportTop;
   CRServo transportBottom;
 
+  LinearOpMode opMode;
+
   static final double COUNTS_PER_TIRE_REV = 537.7;
   static final double WHEEL_DIAMETER_INCHES = 4.0;
   static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
   static final double COUNTS_PER_LAUNCHER_REV = 28;
+
+  public Robot(LinearOpMode opMode) {
+    this.opMode = opMode;
+  }
 
   public void initializeMotors(HardwareMap hardwareMap) {
     // Initialize the drive system variables.
@@ -89,9 +95,14 @@ public class Robot {
     rightLauncher.setPower(power);
   }
 
-  public void setLauncherVelocity(LinearOpMode opMode, double targetVelocityPower) {
+  public void setLauncherVelocity(double targetVelocityPower) {
     // Motor constants for goBILDA 5202
     final double MAX_MOTOR_TPS = 2800.0;
+
+    leftLauncher.setMode(RunMode.STOP_AND_RESET_ENCODER);
+    rightLauncher.setMode(RunMode.STOP_AND_RESET_ENCODER);
+
+    setLauncherPower(0);
 
     leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -120,6 +131,7 @@ public class Robot {
 
       opMode.sleep(10);
     }
+    opMode.sleep(100);
   }
 
   public void stopMotorEncoder() {
@@ -164,7 +176,6 @@ public class Robot {
    *  3) Driver stops the OpMode running.
    */
   public void runDriveInstructions(
-      LinearOpMode opMode,
       double speed,
       double leftInches,
       double rightInches,

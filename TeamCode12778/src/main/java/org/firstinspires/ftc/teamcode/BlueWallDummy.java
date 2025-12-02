@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous(name = "Blue Wall Dummy")
 public class BlueWallDummy extends LinearOpMode {
 
-    private final Robot robot = new Robot();
+    private final Robot robot = new Robot(this);
 
     @Override
     public void runOpMode() {
@@ -50,7 +50,7 @@ public class BlueWallDummy extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5, 16, 16, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
+        robot.runDriveInstructions(0.5, 16, 16, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.

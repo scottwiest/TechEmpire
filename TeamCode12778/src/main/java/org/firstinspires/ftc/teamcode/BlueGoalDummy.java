@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name="Blue Goal Dummy")
 public class BlueGoalDummy extends LinearOpMode {
-    private final Robot robot = new Robot();
+    private final Robot robot = new Robot(this);
 
     @Override
     public void runOpMode() {
@@ -49,9 +49,9 @@ public class BlueGoalDummy extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5,  -10,  -10, 5.0);
-        robot.runDriveInstructions(this,0.5,12,-12,5.0);
-        robot.runDriveInstructions(this,0.5,-6,-6,5.0);
+        robot.runDriveInstructions(0.5,  -10,  -10, 5.0);
+        robot.runDriveInstructions(0.5,12,-12,5.0);
+        robot.runDriveInstructions(0.5,-20,-20,5.0);
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.

@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name="Red Goal Position")
 public class RedGoalPosition extends LinearOpMode {
-    private final Robot robot = new Robot();
+    private final Robot robot = new Robot(this);
 
     @Override
     public void runOpMode() {
@@ -49,12 +49,12 @@ public class RedGoalPosition extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(this, 0.5,  -35,  -35, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        robot.runDriveInstructions(0.5,  -35,  -35, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
         // shoot artifact code here
-        robot.setLauncherVelocity(this, 0.07);
+        robot.setLauncherVelocity(0.3);
         robot.transportTop.setPower(1);
-        robot.setLauncherVelocity(this, 0.24);
+        robot.setLauncherVelocity(0.25);
         robot.intake.setPower(1);
         robot.transportBottom.setPower(1);
         sleep(3000);
@@ -62,8 +62,8 @@ public class RedGoalPosition extends LinearOpMode {
         robot.setTransportPower(0);
         robot.setLauncherPower(0);
 
-        robot.runDriveInstructions(this, 0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
-        robot.runDriveInstructions(this, 0.5, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        robot.runDriveInstructions(0.6,   -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
+        robot.runDriveInstructions(0.5, -16, -16, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
