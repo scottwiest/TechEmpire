@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Robot {
 
@@ -73,21 +72,6 @@ public class Robot {
     rightBackMotor.setMode(RunMode.RUN_USING_ENCODER);
     leftLauncher.setMode(RunMode.RUN_USING_ENCODER);
     rightLauncher.setMode(RunMode.RUN_USING_ENCODER);
-  }
-
-  public void logCurrentPosition(Telemetry telemetry) {
-    // Send telemetry message to indicate successful Encoder reset
-    telemetry.addData("Starting at", "LF:%7d RF:%7d LB:%7d RB:%7d",
-        leftFrontMotor.getCurrentPosition(),
-        rightFrontMotor.getCurrentPosition(),
-        leftBackMotor.getCurrentPosition(),
-        rightBackMotor.getCurrentPosition());
-    telemetry.update();
-  }
-
-  public void logPathCompleted(Telemetry telemetry) {
-    telemetry.addData("Path", "Complete");
-    telemetry.update();
   }
 
   public void setLauncherPower(double power) {
@@ -225,16 +209,7 @@ public class Robot {
           (runtime.seconds() < timeoutS) &&
           (leftFrontMotor.isBusy() && rightFrontMotor.isBusy() && leftBackMotor.isBusy()
               && rightBackMotor.isBusy())) {
-
-        // Display it for the driver.
-        opMode.telemetry.addData("Running to", " LF:%7d RF:%7d LB:%7d RB:%7d",
-            newLeftFrontTarget, newRightFrontTarget, newLeftBackTarget, newRightBackTarget);
-        opMode.telemetry.addData("Currently at", " at LF:%7d RF:%7d LB:%7d RB:%7d",
-            leftFrontMotor.getCurrentPosition(),
-            rightFrontMotor.getCurrentPosition(),
-            leftBackMotor.getCurrentPosition(),
-            rightBackMotor.getCurrentPosition());
-        opMode.telemetry.update();
+        opMode.sleep(10);
       }
 
       // Stop all motion;
@@ -249,7 +224,7 @@ public class Robot {
       leftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
       rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-      opMode.sleep(250);   // optional pause after each move.
+      opMode.sleep(100);   // pause after each move.
     }
   }
 }

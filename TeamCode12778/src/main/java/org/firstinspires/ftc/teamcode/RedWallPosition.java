@@ -42,9 +42,6 @@ public class RedWallPosition extends LinearOpMode {
     robot.initializeMotors(hardwareMap);
     robot.setRunUsingEncoder();
 
-    // Send telemetry message to indicate successful Encoder reset
-    robot.logCurrentPosition(telemetry);
-
     // Wait for the game to start (driver presses START)
     waitForStart();
 
@@ -54,9 +51,9 @@ public class RedWallPosition extends LinearOpMode {
     robot.runDriveInstructions(0.6, 12, -12, 4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
 
     // shoot artifact code here
-    robot.setLauncherVelocity(0.35);
+    robot.setLauncherVelocity(0.6);
     robot.transportTop.setPower(1);
-    robot.setLauncherVelocity(0.3);
+    robot.setLauncherVelocity(0.25);
     robot.intake.setPower(1);
     robot.transportBottom.setPower(1);
     sleep(3000);
@@ -70,7 +67,6 @@ public class RedWallPosition extends LinearOpMode {
     sleep(250);
     robot.stopMotors();
 
-    robot.logPathCompleted(telemetry);
     sleep(1000);  // pause to display final telemetry message.
   }
 }

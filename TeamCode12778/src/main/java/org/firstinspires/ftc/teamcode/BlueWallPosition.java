@@ -35,34 +35,31 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous(name = "Blue Wall Position")
 public class BlueWallPosition extends LinearOpMode {
 
-  private final Robot robot = new Robot(this);
+    private final Robot robot = new Robot(this);
 
     @Override
     public void runOpMode() {
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
 
-    // Step through each leg of the path,
-    // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        // Step through each leg of the path,
+        // Note: Reverse movement is obtained by setting a negative distance (not speed)
         robot.runDriveInstructions(0.5, 65, 65, 5.0);
         robot.runDriveInstructions(0.5, -12, 12, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
 
-    // shoot artifact code here
-    robot.setLauncherVelocity(0.35);
-    robot.transportTop.setPower(1);
-    robot.setLauncherVelocity(0.25);
-    robot.intake.setPower(1);
-    robot.transportBottom.setPower(1);
-    sleep(3000);
-    robot.intake.setPower(0);
-    robot.setTransportPower(0);
-    robot.setLauncherPower(0);
+        // shoot artifact code here
+        robot.setLauncherVelocity(0.6);
+        robot.transportBottom.setPower(1);
+        robot.transportTop.setPower(1);
+        robot.setLauncherVelocity(0.25);
+        robot.intake.setPower(1);
+        sleep(3000);
+        robot.intake.setPower(0);
+        robot.setTransportPower(0);
+        robot.setLauncherPower(0);
 
         robot.stopMotorEncoder();
 
@@ -70,7 +67,6 @@ public class BlueWallPosition extends LinearOpMode {
         sleep(250);
         robot.stopMotors();
 
-        robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }

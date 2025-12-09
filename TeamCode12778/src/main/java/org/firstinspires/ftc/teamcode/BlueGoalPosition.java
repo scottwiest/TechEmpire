@@ -41,9 +41,6 @@ public class BlueGoalPosition extends LinearOpMode {
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
 
@@ -52,7 +49,7 @@ public class BlueGoalPosition extends LinearOpMode {
         robot.runDriveInstructions(0.5,  -35,  -35, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
 
         // shoot artifact code here
-        robot.setLauncherVelocity(0.3);
+        robot.setLauncherVelocity(0.6);
         robot.transportTop.setPower(1);
         robot.setLauncherVelocity(0.25);
         robot.intake.setPower(1);
@@ -67,7 +64,6 @@ public class BlueGoalPosition extends LinearOpMode {
         robot.runDriveInstructions(0.6,   20, -20, 4.0);  // S2: Turn Right 15 Inches with 4 Sec timeout
         robot.runDriveInstructions(0.5, -18, -18, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
-        robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }

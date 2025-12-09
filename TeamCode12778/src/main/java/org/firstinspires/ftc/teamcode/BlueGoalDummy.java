@@ -41,9 +41,6 @@ public class BlueGoalDummy extends LinearOpMode {
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
 
@@ -53,7 +50,6 @@ public class BlueGoalDummy extends LinearOpMode {
         robot.runDriveInstructions(0.5,12,-12,5.0);
         robot.runDriveInstructions(0.5,-20,-20,5.0);
 
-        robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }

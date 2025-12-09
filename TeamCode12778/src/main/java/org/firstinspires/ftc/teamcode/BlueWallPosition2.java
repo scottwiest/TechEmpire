@@ -42,9 +42,6 @@ public class BlueWallPosition2 extends LinearOpMode {
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
 
@@ -72,7 +69,6 @@ public class BlueWallPosition2 extends LinearOpMode {
         sleep(250);
         robot.stopMotors();
 
-        robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }

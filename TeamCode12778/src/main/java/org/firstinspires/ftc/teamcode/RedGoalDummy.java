@@ -41,9 +41,6 @@ public class RedGoalDummy extends LinearOpMode {
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
 
@@ -54,7 +51,6 @@ public class RedGoalDummy extends LinearOpMode {
         robot.runDriveInstructions(0.5,20,20,5.0);
         // shoot artifact code here
 
-        robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }

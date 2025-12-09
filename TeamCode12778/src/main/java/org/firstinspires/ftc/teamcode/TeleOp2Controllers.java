@@ -93,7 +93,7 @@ public class TeleOp2Controllers  extends LinearOpMode {
                 robot.setLauncherPower(0.29);
             }
             if (gamepad2.y) {
-                robot.setLauncherPower(0.25);
+                robot.setLauncherPower(0.27);
             }
             if (gamepad2.x) {
                 robot.setLauncherPower(0);
@@ -130,22 +130,25 @@ public class TeleOp2Controllers  extends LinearOpMode {
             if (gamepad2.rightBumperWasPressed()) {
                 robot.transportTop.setPower(-0.5);
                 robot.transportBottom.setPower(-0.5);
-                robot.setLauncherPower(-0.2);
+                robot.setLauncherPower(-0.1625);
             }
             if (gamepad2.rightBumperWasReleased()) {
                 robot.transportTop.setPower(0);
                 robot.transportBottom.setPower(0);
                 robot.setLauncherPower(0);
             }
+            if(gamepad2.leftBumperWasPressed()){
+                robot.transportTop.setPower(-0.5);
+                robot.transportBottom.setPower(-0.5);
+            }
+            if(gamepad2.leftBumperWasReleased()){
+                robot.transportTop.setPower(0);
+                robot.transportBottom.setPower(0);
+            }
             if (gamepad1.right_trigger > 0.5){
                 robot.transportTop.setPower(-1);
                 robot.transportBottom.setPower(-1);
                 robot.setLauncherPower(-0.25);
             }
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime);
-            telemetry.addData("Front left/Right", JavaUtil.formatNumber(leftFrontPower, 4, 2) + ", " + JavaUtil.formatNumber(rightFrontPower, 4, 2));
-            telemetry.addData("Back  left/Right", JavaUtil.formatNumber(leftBackPower, 4, 2) + ", " + JavaUtil.formatNumber(rightBackPower, 4, 2));
-            telemetry.update();
         }
     }}

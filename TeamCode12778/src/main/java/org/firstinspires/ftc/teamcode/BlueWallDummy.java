@@ -42,9 +42,6 @@ public class BlueWallDummy extends LinearOpMode {
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
 
-        // Send telemetry message to indicate successful Encoder reset
-        robot.logCurrentPosition(telemetry);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
 
@@ -52,7 +49,6 @@ public class BlueWallDummy extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         robot.runDriveInstructions(0.5, 16, 16, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
 
-        robot.logPathCompleted(telemetry);
         sleep(1000);  // pause to display final telemetry message.
     }
 }
