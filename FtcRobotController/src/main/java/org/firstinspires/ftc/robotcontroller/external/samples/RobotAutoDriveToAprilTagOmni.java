@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
  * https://ftc-docs.firstinspires.org/apriltag-detection-values
  *
  * The drive goal is to rotate to keep the Tag centered in the camera, while strafing to be directly in front of the tag, and
- * driving towards the tag to achieve the desired distance.
+ * driving towards the tag tX achieve the desired distance.
  * To reduce any motion blur (which will interrupt the detection process) the Camera exposure is reduced to a very low value (5mS)
  * You can determine the best Exposure and Gain values by using the ConceptAprilTagOptimizeExposure OpMode in this Samples folder.
  *
