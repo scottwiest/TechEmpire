@@ -32,26 +32,27 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Blue Goal Dummy")
+@Autonomous(name = "Blue Goal Dummy")
 public class BlueGoalDummy extends LinearOpMode {
-    private final Robot robot = new Robot(this);
 
-    @Override
-    public void runOpMode() {
-        robot.initializeMotors(hardwareMap);
-        robot.setRunUsingEncoder();
+  private final Robot robot = new Robot(this);
 
-        // Wait for the game to start (driver presses START)
-        waitForStart();
+  @Override
+  public void runOpMode() {
+    robot.initializeMotors(hardwareMap);
+    robot.setRunUsingEncoder();
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.runDriveInstructions(0.5,  -10,  -10, 5.0);
-        robot.runDriveInstructions(0.5,12,-12,5.0);
-        robot.runDriveInstructions(0.5,-20,-20,5.0);
+    // Wait for the game to start (driver presses START)
+    waitForStart();
 
-        sleep(1000);  // pause to display final telemetry message.
-    }
+    // Step through each leg of the path,
+    // Note: Reverse movement is obtained by setting a negative distance (not speed)
+    robot.runDriveInstructions(0.5, -10, -10, 5.0);
+    robot.runDriveInstructions(0.5, 12, -12, 5.0);
+    robot.runDriveInstructions(0.5, -20, -20, 5.0);
+
+    sleep(1000);  // pause to display final telemetry message.
+  }
 }
 
 

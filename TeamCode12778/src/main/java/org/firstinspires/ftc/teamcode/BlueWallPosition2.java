@@ -53,8 +53,9 @@ public class BlueWallPosition2 extends LinearOpMode {
         robot.runDriveInstructions(0.5, 85, 85, 5.0);// S1: Forward 72 Inches with 7 Sec timeout
 
     // shoot artifact code here
-    robot.setLauncherVelocity(0.3);
+    robot.setLauncherVelocity(0.25);
     robot.transportTop.setPower(1);
+    sleep(3000);
     robot.setLauncherVelocity(0.25);
     robot.intake.setPower(1);
     robot.transportBottom.setPower(1);

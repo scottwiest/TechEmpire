@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Math.abs;
+import static org.firstinspires.ftc.robotcore.external.JavaUtil.createListWith;
+import static org.firstinspires.ftc.robotcore.external.JavaUtil.maxOfList;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,7 +11,6 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -20,13 +23,9 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
 import java.util.List;
-import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import java.util.concurrent.TimeUnit;
 
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-public class Robot{
+public class Robot {
 
   private final ElapsedTime runtime = new ElapsedTime();
   DcMotor leftFrontMotor;
@@ -47,22 +46,22 @@ public class Robot{
   static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
   static final double COUNTS_PER_LAUNCHER_REV = 28;
-  final double SPEED_GAIN  =  0.02  ;
+  final double SPEED_GAIN = 0.02;
   final double DESIRED_DISTANCE = 12.0;
-  final double STRAFE_GAIN =  0.015 ;
-  final double TURN_GAIN   =  0.01  ;
+  final double STRAFE_GAIN = 0.015;
+  final double TURN_GAIN = 0.01;
   final double MAX_AUTO_SPEED = 0.5;
-  final double MAX_AUTO_STRAFE= 0.5;
-  final double MAX_AUTO_TURN  = 0.3;
+  final double MAX_AUTO_STRAFE = 0.5;
+  final double MAX_AUTO_TURN = 0.3;
   private static final boolean USE_WEBCAM = true;
   private static final int DESIRED_TAG_ID = -1;
   private VisionPortal visionPortal;
   private AprilTagProcessor aprilTag;
   private AprilTagDetection desiredTag = null;
-  boolean targetFound     = false;    // Set to true when an AprilTag target is detected
-  double  drive           = 0;        // Desired forward power/speed (-1 to +1)
-  double  strafe          = 0;        // Desired strafe power/speed (-1 to +1)
-  double  turn            = 0;
+  boolean targetFound = false;    // Set to true when an AprilTag target is detected
+  double drive = 0;        // Desired forward power/speed (-1 to +1)
+  double strafe = 0;        // Desired strafe power/speed (-1 to +1)
+  double turn = 0;
   // Or add a constructor/method to set this
 
   public Robot(LinearOpMode opMode) {
@@ -120,14 +119,6 @@ public class Robot{
     // Motor constants for goBILDA 5202
     final double MAX_MOTOR_TPS = 2800.0;
 
-    //leftLauncher.setMode(RunMode.STOP_AND_RESET_ENCODER);
-    //rightLauncher.setMode(RunMode.STOP_AND_RESET_ENCODER);
-
-    //setLauncherPower(0);
-
-    //leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    //rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     double targetVelocityTPS = (MAX_MOTOR_TPS * targetVelocityPower);
 
     leftLauncher.setVelocity(targetVelocityTPS);
@@ -139,12 +130,12 @@ public class Robot{
 
     // Calculate the tolerance required for this specific velocity
     double requiredTolerance = Math.max(MIN_ABS_TOLERANCE,
-        Math.abs(targetVelocityTPS) * PERCENT_TOLERANCE);
+        abs(targetVelocityTPS) * PERCENT_TOLERANCE);
 
     // Don't return until the velocity is reached for BOTH motors
     while (opMode.opModeIsActive()) {
-      double leftError = Math.abs(leftLauncher.getVelocity() - targetVelocityTPS);
-      double rightError = Math.abs(rightLauncher.getVelocity() - targetVelocityTPS);
+      double leftError = abs(leftLauncher.getVelocity() - targetVelocityTPS);
+      double rightError = abs(rightLauncher.getVelocity() - targetVelocityTPS);
 
       if (leftError <= requiredTolerance && rightError <= requiredTolerance) {
         break; // Exit the loop only when both motors are in tolerance
@@ -231,10 +222,10 @@ public class Robot{
 
       // reset the timeout time and start motion.
       runtime.reset();
-      leftFrontMotor.setPower(Math.abs(speed));
-      rightFrontMotor.setPower(Math.abs(speed));
-      leftBackMotor.setPower(Math.abs(speed));
-      rightBackMotor.setPower(Math.abs(speed));
+      leftFrontMotor.setPower(abs(speed));
+      rightFrontMotor.setPower(abs(speed));
+      leftBackMotor.setPower(abs(speed));
+      rightBackMotor.setPower(abs(speed));
 
       // keep looping while we are still active, and there is time left, and both motors are running.
       // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -264,17 +255,18 @@ public class Robot{
       opMode.sleep(100);   // pause after each move.
     }
   }
-  public void moveRobot(double x, double y, double yaw) {
+
+  public void moveRobot(float axial, float lateral, float yaw) {
     // Calculate wheel powers.
-    double frontLeftPower    =  x - y - yaw;
-    double frontRightPower   =  x + y + yaw;
-    double backLeftPower     =  x + y - yaw;
-    double backRightPower    =  x - y + yaw;
+    double frontLeftPower = axial + lateral + yaw;
+    double frontRightPower = axial - lateral - yaw;
+    double backLeftPower = axial - lateral + yaw;
+    double backRightPower = axial + lateral - yaw;
 
     // Normalize wheel powers to be less than 1.0
-    double max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
-    max = Math.max(max, Math.abs(backLeftPower));
-    max = Math.max(max, Math.abs(backRightPower));
+    double max = maxOfList(createListWith(
+        abs(frontLeftPower), abs(frontRightPower), abs(backLeftPower), abs(backRightPower
+        )));
 
     if (max > 1.0) {
       frontLeftPower /= max;
@@ -283,12 +275,14 @@ public class Robot{
       backRightPower /= max;
     }
 
+    double speedScaleFactor = 0.5;
     // Send powers to the wheels.
-    leftFrontMotor.setPower(frontLeftPower);
-    rightFrontMotor.setPower(frontRightPower);
-    leftBackMotor.setPower(backLeftPower);
-    rightBackMotor.setPower(backRightPower);
+    leftFrontMotor.setPower(frontLeftPower * speedScaleFactor);
+    rightFrontMotor.setPower(frontRightPower * speedScaleFactor);
+    leftBackMotor.setPower(backLeftPower * speedScaleFactor);
+    rightBackMotor.setPower(backRightPower * speedScaleFactor);
   }
+
   private void initAprilTag() {
     // Create the AprilTag processor by using a builder.
     aprilTag = new AprilTagProcessor.Builder().build();
@@ -305,17 +299,18 @@ public class Robot{
     // Create the vision portal by using a builder.
     if (USE_WEBCAM) {
       visionPortal = new VisionPortal.Builder()
-              .setCamera(Webcam1)
-              .addProcessor(aprilTag)
-              .build();
+          .setCamera(Webcam1)
+          .addProcessor(aprilTag)
+          .build();
     } else {
       visionPortal = new VisionPortal.Builder()
-              .setCamera(BuiltinCameraDirection.BACK)
-              .addProcessor(aprilTag)
-              .build();
+          .setCamera(BuiltinCameraDirection.BACK)
+          .addProcessor(aprilTag)
+          .build();
     }
   }
-  private void    setManualExposure(int exposureMS, int gain) {
+
+  private void setManualExposure(int exposureMS, int gain) {
     // Wait for the camera to be open, then use the controls
 
     if (visionPortal == null) {
@@ -326,7 +321,8 @@ public class Robot{
     if (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
       opMode.telemetry.addData("Camera", "Waiting");
       opMode.telemetry.update();
-      while (!opMode.isStopRequested() && (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING)) {
+      while (!opMode.isStopRequested() && (visionPortal.getCameraState()
+          != VisionPortal.CameraState.STREAMING)) {
         opMode.sleep(20);
       }
       opMode.telemetry.addData("Camera", "Ready");
@@ -334,20 +330,20 @@ public class Robot{
     }
 
     // Set camera controls unless we are stopping.
-    if (!opMode.isStopRequested())
-    {
+    if (!opMode.isStopRequested()) {
       ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
       if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
         exposureControl.setMode(ExposureControl.Mode.Manual);
         opMode.sleep(50);
       }
-      exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
+      exposureControl.setExposure((long) exposureMS, TimeUnit.MILLISECONDS);
       opMode.sleep(20);
       GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
       gainControl.setGain(gain);
       opMode.sleep(20);
     }
   }
+
   public void updateTelemetry(Telemetry telemetry) {
     opMode.telemetry.addData("Target Found", desiredTag != null ? "Yes" : "No");
     opMode.telemetry.addData("Drive/Strafe/Turn", "%.2f, %.2f, %.2f", drive, strafe, turn);
@@ -361,9 +357,10 @@ public class Robot{
       opMode.telemetry.addLine("Manual Control Active");
     }
   }
+
   public void checkForTarget(Telemetry telemetry) {
     targetFound = false;
-    desiredTag  = null;
+    desiredTag = null;
 
     List<AprilTagDetection> currentDetections = aprilTag.getDetections();
     for (AprilTagDetection detection : currentDetections) {
@@ -391,13 +388,13 @@ public class Robot{
 
     // Tell the driver what we see, and what to do.
     if (targetFound) {
-      telemetry.addData("\n>","HOLD Left-Bumper to Drive to Target\n");
+      telemetry.addData("\n>", "HOLD Left-Bumper to Drive to Target\n");
       telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
-      telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
-      telemetry.addData("Bearing","%3.0f degrees", desiredTag.ftcPose.bearing);
-      telemetry.addData("Yaw","%3.0f degrees", desiredTag.ftcPose.yaw);
+      telemetry.addData("Range", "%5.1f inches", desiredTag.ftcPose.range);
+      telemetry.addData("Bearing", "%3.0f degrees", desiredTag.ftcPose.bearing);
+      telemetry.addData("Yaw", "%3.0f degrees", desiredTag.ftcPose.yaw);
     } else {
-      telemetry.addData("\n>","Drive using joysticks to find valid target\n");
+      telemetry.addData("\n>", "Drive using joysticks to find valid target\n");
     }
   }
 }
