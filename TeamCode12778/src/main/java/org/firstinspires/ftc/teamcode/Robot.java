@@ -107,9 +107,11 @@ public class Robot {
     rightLauncher.setPower(power);
   }
 
-  public void setLauncherVelocity(double targetVelocityPower) {
+  public void setLauncherVelocity(double targetVelocityPower, double timeout) {
     // Motor constants for goBILDA 5202
     final double MAX_MOTOR_TPS = 2800.0;
+
+    runtime.reset();
 
     double targetVelocityTPS = (MAX_MOTOR_TPS * targetVelocityPower);
 
@@ -129,7 +131,8 @@ public class Robot {
       double leftError = abs(leftLauncher.getVelocity() - targetVelocityTPS);
       double rightError = abs(rightLauncher.getVelocity() - targetVelocityTPS);
 
-      if (leftError <= requiredTolerance && rightError <= requiredTolerance) {
+      if ((leftError <= requiredTolerance && rightError <= requiredTolerance)
+              || runtime.seconds() > timeout) {
         break; // Exit the loop only when both motors are in tolerance
       }
 
