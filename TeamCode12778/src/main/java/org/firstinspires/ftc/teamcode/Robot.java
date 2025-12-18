@@ -45,14 +45,6 @@ public class Robot {
   static final double WHEEL_DIAMETER_INCHES = 4.0;
   static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
-  static final double COUNTS_PER_LAUNCHER_REV = 28;
-  final double SPEED_GAIN = 0.02;
-  final double DESIRED_DISTANCE = 12.0;
-  final double STRAFE_GAIN = 0.015;
-  final double TURN_GAIN = 0.01;
-  final double MAX_AUTO_SPEED = 0.5;
-  final double MAX_AUTO_STRAFE = 0.5;
-  final double MAX_AUTO_TURN = 0.3;
   private static final boolean USE_WEBCAM = true;
   private static final int DESIRED_TAG_ID = -1;
   private VisionPortal visionPortal;
@@ -79,7 +71,7 @@ public class Robot {
     intake = hardwareMap.get(DcMotor.class, "intake");
     transportTop = hardwareMap.get(CRServo.class, "transportTop");
     transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
-    Webcam1 = hardwareMap.get(WebcamName.class, "Webcam 1");
+    // Webcam1 = hardwareMap.get(WebcamName.class, "Webcam 1");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
