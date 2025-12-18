@@ -55,7 +55,7 @@ public class TeleOp2Controllers extends LinearOpMode {
       // Note: pushing stick forward gives negative value
       robot.moveRobot(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
       if (gamepad2.a) {
-        robot.setLauncherPower(0.335);
+        robot.setLauncherPower(0.35);
       }
       if (gamepad2.b) {
         robot.setLauncherPower(0.29);
@@ -84,10 +84,10 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.setTransportPower(0);
       }
       if (gamepad2.dpadLeftWasPressed()) {
-        robot.transportBottom.setPower(1);
+        robot.intake.setPower(1);
       }
       if (gamepad2.dpadLeftWasReleased()) {
-        robot.transportBottom.setPower(0);
+        robot.intake.setPower(0);
       }
       if (gamepad2.dpadUpWasPressed()) {
         robot.transportTop.setPower(1);
