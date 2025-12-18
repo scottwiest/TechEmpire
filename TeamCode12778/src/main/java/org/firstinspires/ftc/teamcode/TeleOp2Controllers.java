@@ -55,13 +55,13 @@ public class TeleOp2Controllers extends LinearOpMode {
       // Note: pushing stick forward gives negative value
       robot.moveRobot(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
       if (gamepad2.a) {
-        robot.setLauncherPower(0.35);
+        robot.setLauncherPower(0.36);
       }
       if (gamepad2.b) {
-        robot.setLauncherPower(0.29);
+        robot.setLauncherPower(0.3);
       }
       if (gamepad2.y) {
-        robot.setLauncherPower(0.27);
+        robot.setLauncherPower(0.28);
       }
       if (gamepad2.x) {
         robot.setLauncherPower(0);
