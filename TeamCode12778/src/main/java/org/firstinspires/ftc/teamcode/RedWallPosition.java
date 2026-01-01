@@ -31,26 +31,66 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import java.util.List;
 
-@Autonomous(name = "Red Wall Position")
+@Autonomous(name = "Red Wall Position with AprilTag")
 public class RedWallPosition extends LinearOpMode {
 
-  private final Robot robot = new Robot(this);
+    private final Robot robot = new Robot(this);
+    
+    // Vision Variables
+    private AprilTagProcessor aprilTag;
+    private VisionPortal visionPortal;
+    private AprilTagDetection desiredTag = null;
 
-  @Override
-  public void runOpMode() {
-    robot.initializeMotors(hardwareMap);
-    robot.setRunUsingEncoder();
+    @Override
+    public void runOpMode() {
+        // 1. Initialize Hardware and Vision
+        robot.initializeMotors(hardwareMap);
+        robot.setRunUsingEncoder();
+        initAprilTag(); // Your camera setup method
 
-    // Wait for the game to start (driver presses START)
-    waitForStart();
+        telemetry.addData("Status", "Initialized & Camera Streaming");
+        telemetry.update();
 
-    // Step through each leg of the path,
-    // Note: Reverse movement is obtained by setting a negative distance (not speed)
-    robot.runDriveInstructions(0.5, 68, 68, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
-    robot.runDriveInstructions(0.6, 12, -12, 4.0);  // S2: Turn Left 24 Inches with 4 Sec timeout
+        waitForStart();
 
-    // shoot artifact code here
+        // 2. Initial Movement
+        // Drive forward to get within sight of the tags
+        robot.runDriveInstructions(0.5, 24, 24, 3.0); 
+
+        // 3. Scan for AprilTag
+        // Give the robot 3 seconds to try and find a tag
+        long scanStartTime = System.currentTimeMillis();
+        boolean tagFound = false;
+
+        while (opModeIsActive() && (System.currentTimeMillis() - scanStartTime < 3000)) {
+            List<AprilTagDetection> detections = aprilTag.getDetections();
+            if (!detections.isEmpty()) {
+                desiredTag = detections.get(0); // Grab the first tag seen
+                tagFound = true;
+                break; 
+            }
+            telemetry.addLine("Searching for AprilTag...");
+            telemetry.update();
+        }
+
+        // 4. Conditional Logic based on what the camera saw
+        if (tagFound) {
+            telemetry.addData("Found Tag ID", desiredTag.id);
+            // Example: If ID is 1, drive further left; if 2, stay center
+            if (desiredTag.id == 1) {
+                robot.runDriveInstructions(0.4, 5, -5, 2.0); // Adjust position
+            }
+        } else {
+            telemetry.addLine("No tag found - using default path");
+        }
+        telemetry.update();
+
+    // 5. Shoot Artifact 
     robot.setLauncherVelocity(0.26, 6);
     robot.transportTop.setPower(1);
     sleep(3000);
@@ -59,15 +99,17 @@ public class RedWallPosition extends LinearOpMode {
     robot.transportBottom.setPower(1);
     sleep(5000);
     robot.intake.setPower(0);
-    robot.setTransportPower(0);
+    robot.setTransportPower(0)
     robot.setLauncherPower(0);
 
-    robot.stopMotorEncoder();
 
     robot.rightStrafe();
     sleep(250);
     robot.stopMotors();
-
-    sleep(1000);  // pause to display final telemetry message.
-  }
+ 
+     sleep(1000);  // pause to display final telemetry message.
+        // Cleanup
+        robot.stopMotorEncoder();
+        visionPortal.close(); // Shut down camera to save battery/CPU
+    }
 }
