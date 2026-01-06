@@ -50,10 +50,10 @@ public class RedGoalPosition extends LinearOpMode {
     robot.runDriveInstructions(0.5, -35, -35, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
 
     // shoot artifact code here
-    robot.setLauncherVelocity(0.25, 6);
+    robot.setLauncherVelocity(0.22, 6);
     robot.transportTop.setPower(1);
     sleep(3000);
-    robot.setLauncherVelocity(0.25, 6);
+    robot.setLauncherVelocity(0.23, 6);
     robot.intake.setPower(1);
     robot.transportBottom.setPower(1);
     sleep(5000);

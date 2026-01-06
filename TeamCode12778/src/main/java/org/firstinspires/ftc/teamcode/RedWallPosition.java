@@ -51,7 +51,7 @@ public class RedWallPosition extends LinearOpMode {
         // 1. Initialize Hardware and Vision
         robot.initializeMotors(hardwareMap);
         robot.setRunUsingEncoder();
-        initAprilTag(); // Your camera setup method
+        robot.initAprilTag();
 
         telemetry.addData("Status", "Initialized & Camera Streaming");
         telemetry.update();
@@ -99,7 +99,7 @@ public class RedWallPosition extends LinearOpMode {
     robot.transportBottom.setPower(1);
     sleep(5000);
     robot.intake.setPower(0);
-    robot.setTransportPower(0)
+    robot.setTransportPower(0);
     robot.setLauncherPower(0);
 
 

@@ -37,7 +37,7 @@ public class Robot {
   DcMotor intake;
   CRServo transportTop;
   CRServo transportBottom;
-  WebcamName Webcam1;
+  WebcamName webcam;
 
   LinearOpMode opMode;
 
@@ -71,7 +71,7 @@ public class Robot {
     intake = hardwareMap.get(DcMotor.class, "intake");
     transportTop = hardwareMap.get(CRServo.class, "transportTop");
     transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
-    // Webcam1 = hardwareMap.get(WebcamName.class, "Webcam 1");
+    webcam = hardwareMap.get(WebcamName.class, "Webcam");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -278,7 +278,7 @@ public class Robot {
     rightBackMotor.setPower(backRightPower * speedScaleFactor);
   }
 
-  private void initAprilTag() {
+  public void initAprilTag() {
     // Create the AprilTag processor by using a builder.
     aprilTag = new AprilTagProcessor.Builder().build();
 
@@ -294,7 +294,7 @@ public class Robot {
     // Create the vision portal by using a builder.
     if (USE_WEBCAM) {
       visionPortal = new VisionPortal.Builder()
-          .setCamera(Webcam1)
+          .setCamera(webcam)
           .addProcessor(aprilTag)
           .build();
     } else {
