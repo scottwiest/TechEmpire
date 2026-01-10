@@ -39,7 +39,7 @@ public class BlueWallDummy extends LinearOpMode {
 
   @Override
   public void runOpMode() {
-    robot.initializeMotors(hardwareMap);
+    robot.initializeHardware(hardwareMap);
     robot.setRunUsingEncoder();
 
     // Wait for the game to start (driver presses START)

@@ -26,7 +26,7 @@ public class TeleOp1Controller extends LinearOpMode {
   public void runOpMode() {
     ElapsedTime runtime;
 
-    robot.initializeMotors(hardwareMap);
+    robot.initializeHardware(hardwareMap);
 
     runtime = new ElapsedTime();
     // ########################################################################################

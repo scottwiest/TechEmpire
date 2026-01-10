@@ -26,8 +26,9 @@ public class TeleOp2Controllers extends LinearOpMode {
   public void runOpMode() {
     ElapsedTime runtime;
 
-    robot.initializeMotors(hardwareMap);
-    robot.initAprilTag();
+    robot.initializeHardware(hardwareMap);
+    robot.initializeAprilTag();
+
     runtime = new ElapsedTime();
     // ########################################################################################
     // !!! IMPORTANT Drive Information. Test your motor directions. !!!!!
@@ -58,10 +59,10 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.setLauncherPower(0.35);
       }
       if (gamepad2.b) {
-        robot.setLauncherPower(0.28);
+        robot.setLauncherPower(0.285);
       }
       if (gamepad2.y) {
-        robot.setLauncherPower(0.266);
+        robot.setLauncherPower(0.28);
       }
       if (gamepad2.x) {
         robot.setLauncherPower(0);
@@ -114,7 +115,7 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.transportBottom.setPower(0);
       }
       if (gamepad2.right_trigger > 0.5) {
-      
+        robot.alignToAprilTag();
       }
       if (gamepad1.right_trigger > 0.5) {
         robot.transportTop.setPower(-1);

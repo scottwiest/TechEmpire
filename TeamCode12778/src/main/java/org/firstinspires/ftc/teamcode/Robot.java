@@ -60,7 +60,7 @@ public class Robot {
     this.opMode = opMode;
   }
 
-  public void initializeMotors(HardwareMap hardwareMap) {
+  public void initializeHardware(HardwareMap hardwareMap) {
     // Initialize the drive system variables.
     leftFrontMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
     rightFrontMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
@@ -278,7 +278,7 @@ public class Robot {
     rightBackMotor.setPower(backRightPower * speedScaleFactor);
   }
 
-  public void initAprilTag() {
+  public void initializeAprilTag() {
     // Create the AprilTag processor by using a builder.
     aprilTag = new AprilTagProcessor.Builder().build();
 
@@ -303,6 +303,9 @@ public class Robot {
           .addProcessor(aprilTag)
           .build();
     }
+  }
+  public void alignToAprilTag() {
+
   }
 
   private void setManualExposure(int exposureMS, int gain) {
