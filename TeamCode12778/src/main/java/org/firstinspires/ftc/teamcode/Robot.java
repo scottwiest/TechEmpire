@@ -12,13 +12,17 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
@@ -280,7 +284,10 @@ public class Robot {
 
   public void initializeAprilTag() {
     // Create the AprilTag processor by using a builder.
-    aprilTag = new AprilTagProcessor.Builder().build();
+    aprilTag = new AprilTagProcessor.Builder()
+        .setTagLibrary(AprilTagGameDatabase.getCurrentGameTagLibrary())
+        .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+        .build();
 
     // Adjust Image Decimation to trade-off detection-range for detection-rate.
     // e.g. Some typical detection data using a Logitech C920 WebCam
@@ -342,21 +349,7 @@ public class Robot {
     }
   }
 
-  public void updateTelemetry(Telemetry telemetry) {
-    opMode.telemetry.addData("Target Found", desiredTag != null ? "Yes" : "No");
-    opMode.telemetry.addData("Drive/Strafe/Turn", "%.2f, %.2f, %.2f", drive, strafe, turn);
-
-    if (desiredTag != null) {
-      opMode.telemetry.addData("ID", desiredTag.id);
-      opMode.telemetry.addData("Range (in)", "%.2f", desiredTag.ftcPose.range);
-      opMode.telemetry.addData("Bearing (deg)", "%.2f", desiredTag.ftcPose.bearing);
-      opMode.telemetry.addData("Yaw (deg)", "%.2f", desiredTag.ftcPose.yaw);
-    } else {
-      opMode.telemetry.addLine("Manual Control Active");
-    }
-  }
-
-  public void checkForTarget(Telemetry telemetry) {
+  public void checkForTarget() {
     targetFound = false;
     desiredTag = null;
 
@@ -372,12 +365,12 @@ public class Robot {
         } else {
           // This tag is in the library, but we do not want to track it right now.
           // Use the passed-in telemetry object
-          telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
+          opMode.telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
         }
       } else {
         // This tag is NOT in the library, so we don't have enough information to track to it.
         // Use the passed-in telemetry object
-        telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
+        opMode.telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
       }
     }
 
@@ -386,14 +379,72 @@ public class Robot {
 
     // Tell the driver what we see, and what to do.
     if (targetFound) {
-      telemetry.addData("\n>", "HOLD Left-Bumper to Drive to Target\n");
-      telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
-
-      telemetry.addData("Range", "%5.1f inches", desiredTag.ftcPose.range);
-      telemetry.addData("Bearing", "%3.0f degrees", desiredTag.ftcPose.bearing);
-      telemetry.addData("Yaw", "%3.0f degrees", desiredTag.ftcPose.yaw);
+      opMode.telemetry.addData("\n>", "HOLD Left-Bumper to Drive to Target\n");
+      opMode.telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
+      opMode.telemetry.addData("Range", "%5.1f inches", desiredTag.ftcPose.range);
+      opMode.telemetry.addData("Bearing", "%3.0f degrees", desiredTag.ftcPose.bearing);
+      opMode.telemetry.addData("Yaw", "%3.0f degrees", desiredTag.ftcPose.yaw);
     } else {
-      telemetry.addData("\n>", "Drive using joysticks to find valid target\n");
+      opMode.telemetry.addData("\n>", "Drive using joysticks to find valid target\n");
+    }
+    opMode.telemetry.update();
+  }
+
+  public void updateTelemetry() {
+    opMode.telemetry.addData("Target Found", desiredTag != null ? "Yes" : "No");
+    opMode.telemetry.addData("Drive/Strafe/Turn", "%.2f, %.2f, %.2f", drive, strafe, turn);
+
+    if (desiredTag != null) {
+      opMode.telemetry.addData("ID", desiredTag.id);
+      opMode.telemetry.addData("Range (in)", "%.2f", desiredTag.ftcPose.range);
+      opMode.telemetry.addData("Bearing (deg)", "%.2f", desiredTag.ftcPose.bearing);
+      opMode.telemetry.addData("Yaw (deg)", "%.2f", desiredTag.ftcPose.yaw);
+    } else {
+      opMode.telemetry.addLine("Manual Control Active");
+    }
+    opMode.telemetry.update();
+  }
+
+  // Constants for tuning
+  final double SPEED_GAIN  =  0.02;   // How fast the robot turns (Adjust this!)
+  final double HEADING_THRESHOLD = 1.0; // Stop turning if within 1 degree
+
+  public void alignToTag(int targetID) {
+    boolean aligned = false;
+
+    while (opMode.opModeIsActive() && !aligned) {
+      List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+      AprilTagDetection targetTag = null;
+
+      // Find the specific tag we are looking for
+      for (AprilTagDetection detection : currentDetections) {
+        if (detection.metadata != null && detection.id == targetID) {
+          targetTag = detection;
+          break;
+        }
+      }
+
+      if (targetTag != null) {
+        double bearing = targetTag.ftcPose.bearing;
+
+        if (Math.abs(bearing) <= HEADING_THRESHOLD) {
+          // We are centered! Stop the motors.
+          stopMotors();
+          aligned = true;
+        } else {
+          // Calculate turn power based on bearing
+          // If bearing is positive, tag is to the right, so turn right
+          double turnPower = bearing * SPEED_GAIN;
+
+          // Limit max power so it doesn't spin out of control
+          turnPower = Range.clip(turnPower, -0.3, 0.3);
+
+          moveRobot(0, (float)turnPower, 0);
+        }
+      } else {
+        // Tag not found - stop or rotate slowly to search
+        stopMotors();
+      }
     }
   }
 }
