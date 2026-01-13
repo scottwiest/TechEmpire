@@ -122,5 +122,7 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.transportBottom.setPower(-1);
         robot.setLauncherPower(-0.25);
       }
+      robot.checkForTarget();
+      robot.updateTelemetry();
     }
   }
