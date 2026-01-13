@@ -71,7 +71,7 @@ public class Robot {
     intake = hardwareMap.get(DcMotor.class, "intake");
     transportTop = hardwareMap.get(CRServo.class, "transportTop");
     transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
-    webcam = hardwareMap.get(WebcamName.class, "Webcam");
+    //webcam = hardwareMap.get(WebcamName.class, "Webcam");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.

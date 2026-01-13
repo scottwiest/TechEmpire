@@ -44,10 +44,10 @@ public class BlueWallDummy extends LinearOpMode {
 
     // Wait for the game to start (driver presses START)
     waitForStart();
-
+sleep(10000);
     // Step through each leg of the path,
     // Note: Reverse movement is obtained by setting a negative distance (not speed)
-    robot.runDriveInstructions(0.5, 16, 16, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
+    robot.runDriveInstructions(0.5, 15, 15, 5.0); // S1: Forward 72 Inches with 5 Sec timeout
 
     sleep(1000);  // pause to display final telemetry message.
   }

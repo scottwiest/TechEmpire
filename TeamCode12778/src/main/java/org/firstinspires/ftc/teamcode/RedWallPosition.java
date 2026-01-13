@@ -54,7 +54,7 @@ public class RedWallPosition extends LinearOpMode {
     robot.setLauncherVelocity(0.26, 6);
     robot.transportTop.setPower(1);
     sleep(3000);
-    robot.setLauncherVelocity(0.28, 6);
+    robot.setLauncherVelocity(0.26, 6);
     robot.intake.setPower(1);
     robot.transportBottom.setPower(1);
     sleep(5000);

@@ -27,7 +27,7 @@ public class TeleOp2Controllers extends LinearOpMode {
     ElapsedTime runtime;
 
     robot.initializeHardware(hardwareMap);
-    robot.initializeAprilTag();
+    // robot.initializeAprilTag();
 
     runtime = new ElapsedTime();
     // ########################################################################################
@@ -59,10 +59,10 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.setLauncherPower(0.35);
       }
       if (gamepad2.b) {
-        robot.setLauncherPower(0.285);
+        robot.setLauncherPower(0.265);
       }
       if (gamepad2.y) {
-        robot.setLauncherPower(0.28);
+        robot.setLauncherPower(0.25);
       }
       if (gamepad2.x) {
         robot.setLauncherPower(0);
@@ -114,8 +114,8 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.transportTop.setPower(0);
         robot.transportBottom.setPower(0);
       }
-      if (gamepad2.right_trigger > 0.5) {
-        robot.alignToAprilTag();
+      //if (gamepad2.right_trigger > 0.5) {
+        //robot.alignToAprilTag();
       }
       if (gamepad1.right_trigger > 0.5) {
         robot.transportTop.setPower(-1);
@@ -124,4 +124,3 @@ public class TeleOp2Controllers extends LinearOpMode {
       }
     }
   }
-}
