@@ -27,7 +27,7 @@ public class TeleOp2Controllers extends LinearOpMode {
     ElapsedTime runtime;
 
     robot.initializeHardware(hardwareMap);
-    // robot.initializeAprilTag();
+    robot.initializeAprilTag();
 
     runtime = new ElapsedTime();
     // ########################################################################################
