@@ -442,7 +442,7 @@ public class Robot {
           moveRobot(0, (float)turnPower, 0);
         }
       } else {
-        // Tag not found - stop or rotate slowly to search
+        // Tag not 1found - stop or rotate slowly to search
         stopMotors();
       }
     }
