@@ -311,9 +311,6 @@ public class Robot {
           .build();
     }
   }
-  public void alignToAprilTag() {
-
-  }
 
   private void setManualExposure(int exposureMS, int gain) {
     // Wait for the camera to be open, then use the controls
@@ -390,26 +387,13 @@ public class Robot {
     opMode.telemetry.update();
   }
 
-  public void updateTelemetry() {
-    opMode.telemetry.addData("Target Found", desiredTag != null ? "Yes" : "No");
-    opMode.telemetry.addData("Drive/Strafe/Turn", "%.2f, %.2f, %.2f", drive, strafe, turn);
-
-    if (desiredTag != null) {
-      opMode.telemetry.addData("ID", desiredTag.id);
-      opMode.telemetry.addData("Range (in)", "%.2f", desiredTag.ftcPose.range);
-      opMode.telemetry.addData("Bearing (deg)", "%.2f", desiredTag.ftcPose.bearing);
-      opMode.telemetry.addData("Yaw (deg)", "%.2f", desiredTag.ftcPose.yaw);
-    } else {
-      opMode.telemetry.addLine("Manual Control Active");
-    }
-    opMode.telemetry.update();
-  }
-
   // Constants for tuning
   final double SPEED_GAIN  =  0.02;   // How fast the robot turns (Adjust this!)
   final double HEADING_THRESHOLD = 1.0; // Stop turning if within 1 degree
 
-  public void alignToTag(int targetID) {
+  final int BLUE_GOAL = 20;
+  final int RED_GOAL = 24;
+  public void alignToAprilTag() {
     boolean aligned = false;
 
     while (opMode.opModeIsActive() && !aligned) {
@@ -418,7 +402,8 @@ public class Robot {
 
       // Find the specific tag we are looking for
       for (AprilTagDetection detection : currentDetections) {
-        if (detection.metadata != null && detection.id == targetID) {
+        if (detection.metadata != null &&
+            (detection.id == BLUE_GOAL || detection.id == RED_GOAL)) {
           targetTag = detection;
           break;
         }
