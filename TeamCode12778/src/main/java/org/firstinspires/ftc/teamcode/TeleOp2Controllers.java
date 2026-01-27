@@ -56,12 +56,14 @@ public class TeleOp2Controllers extends LinearOpMode {
       // Note: pushing stick forward gives negative value
       robot.moveRobot(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
       // Range to Power equation:
-      // Power = 0.0000217*Range^2 - 0.0012022*Range + 0.2655
       if (gamepad2.a) {
         robot.setLauncherPower(0.35);
       }
       if (gamepad2.b) {
-        robot.setLauncherPower(0.265);
+        double range = robot.getRange();
+        double power = 0.0000217*(range * range) - 0.0012022*range + 0.2655;
+        robot.setLauncherPower(power);
+        // robot.setLauncherPower(0.265);
       }
       if (gamepad2.y) {
         robot.setLauncherPower(0.25);
@@ -124,7 +126,6 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.transportBottom.setPower(-1);
         robot.setLauncherPower(-0.25);
       }
-      robot.checkForTarget();
     }
   }
 }

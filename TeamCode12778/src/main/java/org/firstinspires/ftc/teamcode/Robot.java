@@ -50,7 +50,6 @@ public class Robot {
   static final double COUNTS_PER_INCH = (COUNTS_PER_TIRE_REV) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
   private static final boolean USE_WEBCAM = true;
-  private static final int DESIRED_TAG_ID = -1;
   private VisionPortal visionPortal;
   private AprilTagProcessor aprilTag;
   private AprilTagDetection desiredTag = null;
@@ -75,7 +74,7 @@ public class Robot {
     intake = hardwareMap.get(DcMotor.class, "intake");
     transportTop = hardwareMap.get(CRServo.class, "transportTop");
     transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
-    //webcam = hardwareMap.get(WebcamName.class, "Webcam");
+    webcam = hardwareMap.get(WebcamName.class, "Webcam");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
     // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -346,7 +345,7 @@ public class Robot {
     }
   }
 
-  public void checkForTarget() {
+  public double getRange() {
     targetFound = false;
     desiredTag = null;
 
@@ -355,7 +354,7 @@ public class Robot {
       // Look to see if we have size info on this tag.
       if (detection.metadata != null) {
         // Check to see if we want to track towards this tag.
-        if ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID)) {
+        if ((detection.id == BLUE_GOAL) || (detection.id == RED_GOAL)) {
           targetFound = true;
           desiredTag = detection;
           break;  // don't look any further.
@@ -370,21 +369,13 @@ public class Robot {
         opMode.telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
       }
     }
-
-    // Add display messages using a separate updateTelemetry method if you prefer,
-    // or keep them here as they are tightly coupled to the detection step.
-
-    // Tell the driver what we see, and what to do.
-    if (targetFound) {
-      opMode.telemetry.addData("\n>", "HOLD Left-Bumper to Drive to Target\n");
-      opMode.telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
-      opMode.telemetry.addData("Range", "%5.1f inches", desiredTag.ftcPose.range);
-      opMode.telemetry.addData("Bearing", "%3.0f degrees", desiredTag.ftcPose.bearing);
-      opMode.telemetry.addData("Yaw", "%3.0f degrees", desiredTag.ftcPose.yaw);
-    } else {
-      opMode.telemetry.addData("\n>", "Drive using joysticks to find valid target\n");
-    }
     opMode.telemetry.update();
+
+    if (targetFound) {
+      return desiredTag.ftcPose.range;
+    } else {
+      return 55;
+    }
   }
 
   // Constants for tuning
