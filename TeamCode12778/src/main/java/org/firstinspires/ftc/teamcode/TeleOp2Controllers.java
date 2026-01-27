@@ -55,6 +55,8 @@ public class TeleOp2Controllers extends LinearOpMode {
       // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
       // Note: pushing stick forward gives negative value
       robot.moveRobot(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
+      // Range to Power equation:
+      // Power = 0.0000217*Range^2 - 0.0012022*Range + 0.2655
       if (gamepad2.a) {
         robot.setLauncherPower(0.35);
       }
