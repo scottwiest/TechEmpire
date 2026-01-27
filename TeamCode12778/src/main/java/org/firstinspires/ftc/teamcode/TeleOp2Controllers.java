@@ -61,7 +61,7 @@ public class TeleOp2Controllers extends LinearOpMode {
       }
       if (gamepad2.b) {
         double range = robot.getRange();
-        double power = 0.0000217*(range * range) - 0.0012022*range + 0.2655;
+        double power = 0.00002278*(range * range) - 0.00126233*range + 0.27878;
         robot.setLauncherPower(power);
         // robot.setLauncherPower(0.265);
       }
@@ -78,7 +78,6 @@ public class TeleOp2Controllers extends LinearOpMode {
       if (gamepad2.dpadRightWasReleased()) {
         robot.intake.setPower(0);
         robot.transportBottom.setPower(0);
-
       }
       if (gamepad2.dpadDownWasPressed()) {
         robot.intake.setPower(1);

@@ -369,11 +369,14 @@ public class Robot {
         opMode.telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
       }
     }
-    opMode.telemetry.update();
 
     if (targetFound) {
+      opMode.telemetry.addData("Tag Found, Range: ", desiredTag.ftcPose.range);
+      opMode.telemetry.update();
       return desiredTag.ftcPose.range;
     } else {
+      opMode.telemetry.addData("Tag Not Found!!", 0);
+      opMode.telemetry.update();
       return 55;
     }
   }
