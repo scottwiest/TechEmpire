@@ -295,7 +295,7 @@ public class Robot {
     // Decimation = 3 ..  Detect 2" Tag from 4  feet away at 30 Frames Per Second
     // Decimation = 3 ..  Detect 5" Tag from 10 feet away at 30 Frames Per Second
     // Note: Decimation can be changed on-the-fly to adapt during a match.
-    aprilTag.setDecimation(2);
+    aprilTag.setDecimation(1);
 
     // Create the vision portal by using a builder.
     if (USE_WEBCAM) {
@@ -382,15 +382,16 @@ public class Robot {
   }
 
   // Constants for tuning
-  final double SPEED_GAIN  =  0.02;   // How fast the robot turns (Adjust this!)
+  final double SPEED_GAIN  =  0.3;   // How fast the robot turns (Adjust this!)
   final double HEADING_THRESHOLD = 1.0; // Stop turning if within 1 degree
 
   final int BLUE_GOAL = 20;
   final int RED_GOAL = 24;
   public void alignToAprilTag() {
     boolean aligned = false;
-
-    while (opMode.opModeIsActive() && !aligned) {
+    runtime.reset();
+    opMode.telemetry.addData("entered_align", 1);
+    while (opMode.opModeIsActive() && !aligned && (runtime.seconds() < 5.0)) {
       List<AprilTagDetection> currentDetections = aprilTag.getDetections();
       AprilTagDetection targetTag = null;
 
@@ -404,7 +405,9 @@ public class Robot {
       }
 
       if (targetTag != null) {
+        opMode.telemetry.addData("Target found id = ", targetTag.id);
         double bearing = targetTag.ftcPose.bearing;
+        opMode.telemetry.addData("Bearing = ", bearing);
 
         if (Math.abs(bearing) <= HEADING_THRESHOLD) {
           // We are centered! Stop the motors.
@@ -416,9 +419,11 @@ public class Robot {
           double turnPower = bearing * SPEED_GAIN;
 
           // Limit max power so it doesn't spin out of control
-          turnPower = Range.clip(turnPower, -0.3, 0.3);
+          turnPower = Range.clip(turnPower, -0.7, 0.7);
+          opMode.telemetry.addData("Turn Power = ", turnPower);
+          opMode.telemetry.update();
 
-          moveRobot(0, (float)turnPower, 0);
+          moveRobot(0, 0, -(float)turnPower);
         }
       } else {
         // Tag not 1found - stop or rotate slowly to search
