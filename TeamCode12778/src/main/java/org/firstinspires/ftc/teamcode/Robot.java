@@ -423,7 +423,7 @@ public class Robot {
           opMode.telemetry.addData("Turn Power = ", turnPower);
           opMode.telemetry.update();
 
-          moveRobot(0, 0, -(float)turnPower);
+          moveRobot(0, 0, (float)turnPower);
         }
       } else {
         // Tag not 1found - stop or rotate slowly to search
