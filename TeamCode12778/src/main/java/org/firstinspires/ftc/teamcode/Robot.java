@@ -254,7 +254,7 @@ public class Robot {
     }
   }
 
-  public void moveRobot(float axial, float lateral, float yaw) {
+  public void moveRobot(float axial, float lateral, double yaw) {
     // Calculate wheel powers.
     double frontLeftPower = axial + lateral + yaw;
     double frontRightPower = axial - lateral - yaw;
@@ -273,7 +273,7 @@ public class Robot {
       backRightPower /= max;
     }
 
-    double speedScaleFactor = 0.5;
+    double speedScaleFactor = 0.65;
     // Send powers to the wheels.
     leftFrontMotor.setPower(frontLeftPower * speedScaleFactor);
     rightFrontMotor.setPower(frontRightPower * speedScaleFactor);
@@ -382,8 +382,8 @@ public class Robot {
   }
 
   // Constants for tuning
-  final double SPEED_GAIN  =  0.3;   // How fast the robot turns (Adjust this!)
-  final double HEADING_THRESHOLD = 1.0; // Stop turning if within 1 degree
+  final double SPEED_GAIN  =  0.15;   // How fast the robot turns (Adjust this!)
+  final double HEADING_THRESHOLD = 0.5; // Stop turning if within 0.5 degree
 
   final int BLUE_GOAL = 20;
   final int RED_GOAL = 24;
@@ -391,7 +391,8 @@ public class Robot {
     boolean aligned = false;
     runtime.reset();
     opMode.telemetry.addData("entered_align", 1);
-    while (opMode.opModeIsActive() && !aligned && (runtime.seconds() < 5.0)) {
+    opMode.telemetry.update();
+    while (opMode.opModeIsActive() && !aligned && (runtime.seconds() < 3.0)) {
       List<AprilTagDetection> currentDetections = aprilTag.getDetections();
       AprilTagDetection targetTag = null;
 
@@ -416,17 +417,16 @@ public class Robot {
         } else {
           // Calculate turn power based on bearing
           // If bearing is positive, tag is to the right, so turn right
-          double turnPower = bearing * SPEED_GAIN;
-
-          // Limit max power so it doesn't spin out of control
-          turnPower = Range.clip(turnPower, -0.7, 0.7);
-          opMode.telemetry.addData("Turn Power = ", turnPower);
-          opMode.telemetry.update();
-
-          moveRobot(0, 0, -(float)turnPower);
+          if (bearing > 0) {
+            moveRobot(0, 0, 0.5);
+          }else{
+            moveRobot(0, 0, -0.5);
+          }
         }
       } else {
-        // Tag not 1found - stop or rotate slowly to search
+        opMode.telemetry.addData("Tag Not Found!!!",0);
+        opMode.telemetry.update();
+        // Tag not found - stop or rotate slowly to search
         stopMotors();
       }
     }

@@ -63,27 +63,8 @@ public class BlueGoalPosition extends LinearOpMode {
     robot.setLauncherPower(0);
 
     sleep(2500);
-    robot.runDriveInstructions(0.6, -25, -25, 10.0);  // S2: Turn Right 20 Inches with 4 Sec timeout
-    robot.runDriveInstructions(0.5, 24, -24, 4.0);
-    robot.intake.setPower(1);
-    robot.runDriveInstructions(0.5, -50, -50, 20.0);
-    robot.intake.setPower(0);// S3: Reverse 18 Inches with 4 Sec timeout
-    robot.runDriveInstructions(0.5, 50, 50, 20.0);
-    robot.runDriveInstructions(0.5, -24, 24, 4.0);
-    
-    robot.setLauncherVelocity(0.231, 6);
-    robot.transportTop.setPower(1);
-    sleep(2000);
-    robot.setLauncherVelocity(0.242, 6);
-    robot.intake.setPower(1);
-    robot.transportBottom.setPower(1);
-    sleep(5000);
-    robot.intake.setPower(0);
-    robot.setTransportPower(0);
-    robot.setLauncherPower(0);
-
-    robot.runDriveInstructions(0.5, -24, 24, 4.0);
-    robot.runDriveInstructions(0.5, -10.5, 10.5, 4.0);
+    robot.runDriveInstructions(0.6, -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
+    robot.runDriveInstructions(0.5, 10.5, 10.5, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
   }
 }
 

@@ -64,7 +64,7 @@ public class RedWallPosition extends LinearOpMode {
 
     robot.stopMotorEncoder();
 
-    robot.rightStrafe();
+    robot.leftStrafe();
     sleep(250);
     robot.stopMotors();
 

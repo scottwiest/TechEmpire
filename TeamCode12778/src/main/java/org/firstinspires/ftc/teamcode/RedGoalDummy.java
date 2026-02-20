@@ -45,7 +45,7 @@ public class RedGoalDummy extends LinearOpMode {
     // Wait for the game to start (driver presses START)
     waitForStart();
 
-    // Step through each leg of the path,
+    // Step through each leg of the path
     // Note: Reverse movement is obtained by setting a negative distance (not speed)
     robot.runDriveInstructions(0.5, -10, -10, 5.0);
     robot.runDriveInstructions(0.5, -12, 12, 5.0);

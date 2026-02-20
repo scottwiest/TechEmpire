@@ -61,7 +61,7 @@ public class RedGoalPosition extends LinearOpMode {
     robot.setTransportPower(0);
     robot.setLauncherPower(0);
 
-    robot.runDriveInstructions(0.6, -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
+    robot.runDriveInstructions(0.6, 24, -24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
     robot.runDriveInstructions(0.5, 10.5, 10.5, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
     sleep(1000);  // pause to display final telemetry message.
