@@ -69,42 +69,42 @@ public class TeleOp1Controller extends LinearOpMode {
       }
       if (gamepad1.dpadRightWasPressed()) {
         robot.intake.setPower(1);
-        robot.transportBottom.setPower(1);
+        robot.transferMiddle.setPower(1);
       }
       if (gamepad1.dpadRightWasReleased()) {
         robot.intake.setPower(0);
-        robot.transportBottom.setPower(0);
+        robot.transferMiddle.setPower(0);
       }
       if (gamepad1.dpadDownWasPressed()) {
         robot.intake.setPower(1);
-        robot.setTransportPower(1);
+        robot.setTransferPower(1);
       }
       if (gamepad1.dpadDownWasReleased()) {
         robot.intake.setPower(0);
-        robot.setTransportPower(0);
+        robot.setTransferPower(0);
       }
       if (gamepad1.dpadLeftWasPressed()) {
-        robot.transportBottom.setPower(1);
+        robot.transferMiddle.setPower(1);
         robot.intake.setPower(1);
       }
       if (gamepad1.dpadLeftWasReleased()) {
-        robot.transportBottom.setPower(0);
+        robot.transferMiddle.setPower(0);
         robot.intake.setPower(0);
       }
       if (gamepad1.dpadUpWasPressed()) {
-        robot.transportTop.setPower(1);
+        robot.transferTop.setPower(1);
         robot.intake.setPower(1);
       }
       if (gamepad1.dpadUpWasReleased()) {
-        robot.transportTop.setPower(0);
-        robot.transportBottom.setPower(0);
+        robot.transferTop.setPower(0);
+        robot.transferMiddle.setPower(0);
       }
       if (gamepad1.right_bumper) {
         robot.setLauncherPower(-0.25);
       }
       if (gamepad1.right_trigger > 0.5) {
-        robot.transportTop.setPower(-1);
-        robot.transportBottom.setPower(-1);
+        robot.transferTop.setPower(-1);
+        robot.transferMiddle.setPower(-1);
         robot.setLauncherPower(-0.25);
       }
     }

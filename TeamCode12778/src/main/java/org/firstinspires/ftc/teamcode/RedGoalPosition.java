@@ -51,14 +51,15 @@ public class RedGoalPosition extends LinearOpMode {
 
     // shoot artifact code here
     robot.setLauncherVelocity(0.231, 6);
-    robot.transportTop.setPower(1);
+    robot.transferTop.setPower(1);
     sleep(3000);
     robot.setLauncherVelocity(0.232, 6);
     robot.intake.setPower(1);
-    robot.transportBottom.setPower(1);
+    robot.transferMiddle.setPower(1);
+    robot.transferBottom.setPower(1);
     sleep(5000);
     robot.intake.setPower(0);
-    robot.setTransportPower(0);
+    robot.setTransferPower(0);
     robot.setLauncherPower(0);
 
     robot.runDriveInstructions(0.6, 24, -24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout

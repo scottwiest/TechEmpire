@@ -54,14 +54,14 @@ public class BlueWallPosition2 extends LinearOpMode {
 
     // shoot artifact code here
     robot.setLauncherVelocity(0.25, 6);
-    robot.transportTop.setPower(1);
+    robot.transferTop.setPower(1);
     sleep(3000);
     robot.setLauncherVelocity(0.25, 6);
     robot.intake.setPower(1);
-    robot.transportBottom.setPower(1);
+    robot.transferMiddle.setPower(1);
     sleep(3000);
     robot.intake.setPower(0);
-    robot.setTransportPower(0);
+    robot.setTransferPower(0);
     robot.setLauncherPower(0);
 
         robot.stopMotorEncoder();

@@ -12,8 +12,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import com.qualcomm.robotcore.util.Range;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
@@ -39,8 +37,9 @@ public class Robot {
   DcMotorEx leftLauncher;
   DcMotorEx rightLauncher;
   DcMotor intake;
-  CRServo transportTop;
-  CRServo transportBottom;
+  CRServo transferTop;
+  CRServo transferMiddle;
+  CRServo transferBottom;
   WebcamName webcam;
 
   LinearOpMode opMode;
@@ -72,8 +71,9 @@ public class Robot {
     leftLauncher = (DcMotorEx) hardwareMap.get(DcMotor.class, "leftLauncher");
     rightLauncher = (DcMotorEx) hardwareMap.get(DcMotor.class, "rightLauncher");
     intake = hardwareMap.get(DcMotor.class, "intake");
-    transportTop = hardwareMap.get(CRServo.class, "transportTop");
-    transportBottom = hardwareMap.get(CRServo.class, "transportBottom");
+    transferTop = hardwareMap.get(CRServo.class, "transportTop");
+    transferMiddle = hardwareMap.get(CRServo.class, "transportMiddle");
+    transferBottom = hardwareMap.get(CRServo.class, "transferBottom");
     webcam = hardwareMap.get(WebcamName.class, "Webcam");
 
     // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -85,8 +85,8 @@ public class Robot {
     rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
     leftLauncher.setDirection(DcMotor.Direction.REVERSE);
     rightLauncher.setDirection(DcMotor.Direction.FORWARD);
-    transportBottom.setDirection(CRServo.Direction.FORWARD);
-    transportTop.setDirection(CRServo.Direction.FORWARD);
+    transferMiddle.setDirection(CRServo.Direction.FORWARD);
+    transferTop.setDirection(CRServo.Direction.FORWARD);
   }
 
   public void setRunUsingEncoder() {
@@ -172,9 +172,10 @@ public class Robot {
     leftBackMotor.setPower(0);
   }
 
-  public void setTransportPower(double power) {
-    transportBottom.setPower(power);
-    transportTop.setPower(power);
+  public void setTransferPower(double power) {
+    transferBottom.setPower(power);
+    transferMiddle.setPower(power);
+    transferTop.setPower(power);
   }
 
   /*

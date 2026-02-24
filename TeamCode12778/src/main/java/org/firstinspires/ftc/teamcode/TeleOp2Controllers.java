@@ -73,19 +73,20 @@ public class TeleOp2Controllers extends LinearOpMode {
       }
       if (gamepad2.dpadRightWasPressed()) {
         robot.intake.setPower(1);
-        robot.transportBottom.setPower(1);
+        robot.transferBottom.setPower(1);
+        robot.transferMiddle.setPower(1);
       }
       if (gamepad2.dpadRightWasReleased()) {
         robot.intake.setPower(0);
-        robot.transportBottom.setPower(0);
+        robot.transferMiddle.setPower(0);
       }
       if (gamepad2.dpadDownWasPressed()) {
         robot.intake.setPower(1);
-        robot.setTransportPower(1);
+        robot.setTransferPower(1);
       }
       if (gamepad2.dpadDownWasReleased()) {
         robot.intake.setPower(0);
-        robot.setTransportPower(0);
+        robot.setTransferPower(0);
       }
       if (gamepad2.dpadLeftWasPressed()) {
         robot.intake.setPower(1);
@@ -94,35 +95,30 @@ public class TeleOp2Controllers extends LinearOpMode {
         robot.intake.setPower(0);
       }
       if (gamepad2.dpadUpWasPressed()) {
-        robot.transportTop.setPower(1);
+        robot.transferTop.setPower(1);
       }
       if (gamepad2.dpadUpWasReleased()) {
-        robot.transportTop.setPower(0);
+        robot.transferTop.setPower(0);
       }
       if (gamepad2.rightBumperWasPressed()) {
-        robot.transportTop.setPower(-0.5);
-        robot.transportBottom.setPower(-0.5);
+        robot.setTransferPower(-0.5);
         robot.setLauncherPower(-0.1625);
       }
       if (gamepad2.rightBumperWasReleased()) {
-        robot.transportTop.setPower(0);
-        robot.transportBottom.setPower(0);
+        robot.setTransferPower(0);
         robot.setLauncherPower(0);
       }
       if (gamepad2.leftBumperWasPressed()) {
-        robot.transportTop.setPower(-0.5);
-        robot.transportBottom.setPower(-0.5);
+        robot.setTransferPower(-0.5);
       }
       if (gamepad2.leftBumperWasReleased()) {
-        robot.transportTop.setPower(0);
-        robot.transportBottom.setPower(0);
+        robot.setTransferPower(0);
       }
       if (gamepad1.right_trigger > 0.5) {
         robot.alignToAprilTag();
       }
       if (gamepad2.right_trigger > 0.5) {
-        robot.transportTop.setPower(-1);
-        robot.transportBottom.setPower(-1);
+        robot.setTransferPower(-1);
         robot.setLauncherPower(-0.25);
       }
     }
