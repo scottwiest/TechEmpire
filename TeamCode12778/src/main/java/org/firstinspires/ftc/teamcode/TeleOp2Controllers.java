@@ -79,6 +79,7 @@ public class TeleOp2Controllers extends LinearOpMode {
       if (gamepad2.dpadRightWasReleased()) {
         robot.intake.setPower(0);
         robot.transferMiddle.setPower(0);
+        robot.transferBottom.setPower(0);
       }
       if (gamepad2.dpadDownWasPressed()) {
         robot.intake.setPower(1);

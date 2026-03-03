@@ -65,7 +65,7 @@ public class BlueWallPosition extends LinearOpMode {
 
     robot.stopMotorEncoder();
 
-    robot.rightStrafe();
+    robot.leftStrafe();
     sleep(250);
     robot.stopMotors();
 
