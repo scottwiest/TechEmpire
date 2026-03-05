@@ -123,7 +123,7 @@ public class Robot {
 
     // Dynamic Tolerance Parameters
     final double MIN_ABS_TOLERANCE = 5.0; // Always be within at least 5 TPS
-    final double PERCENT_TOLERANCE = 0.01; // 1% of the target velocity
+    final double PERCENT_TOLERANCE = 0.08; // 1% of the target velocity
 
     // Calculate the tolerance required for this specific velocity
     double requiredTolerance = Math.max(MIN_ABS_TOLERANCE,
