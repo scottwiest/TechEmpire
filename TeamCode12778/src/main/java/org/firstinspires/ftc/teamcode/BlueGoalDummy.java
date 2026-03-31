@@ -48,9 +48,9 @@ public class BlueGoalDummy extends LinearOpMode {
     // Step through each leg of the path,
     // Note: Reverse movement is obtained by setting a negative distance (not speed)
       sleep(10000);
-    robot.runDriveInstructions(0.8, -10, -10, 5.0);
-    robot.runDriveInstructions(0.8, 12, -12, 5.0);
-    robot.runDriveInstructions(0.8, 7, 7, 5.0);
+    robot.rightStrafe();
+    sleep(500);
+    robot.stopMotors();
 
     sleep(1000);  // pause to display final telemetry message.
   }

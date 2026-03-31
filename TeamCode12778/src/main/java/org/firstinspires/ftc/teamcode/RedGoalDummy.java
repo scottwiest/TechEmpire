@@ -47,9 +47,9 @@ public class RedGoalDummy extends LinearOpMode {
 
     // Step through each leg of the path
     // Note: Reverse movement is obtained by setting a negative distance (not speed)
-    robot.runDriveInstructions(0.5, -10, -10, 5.0);
-    robot.runDriveInstructions(0.5, -12, 12, 5.0);
-    robot.runDriveInstructions(0.5, 20, 20, 5.0);
+    robot.leftStrafe();
+    sleep(500);
+    robot.stopMotors();
     // shoot artifact code here
 
     sleep(1000);  // pause to display final telemetry message.

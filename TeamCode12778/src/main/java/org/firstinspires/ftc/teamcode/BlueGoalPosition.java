@@ -51,7 +51,7 @@ public class BlueGoalPosition extends LinearOpMode {
     robot.runDriveInstructions(0.5, -35, -35, 10.0);
 
     // shoot artifact code here
-    robot.setLauncherVelocity(0.231, 6);
+    robot.setLauncherVelocity(0.229, 6);
     robot.transferTop.setPower(1);
     sleep(2000);
     robot.setLauncherVelocity(0.242, 6);
@@ -66,25 +66,26 @@ public class BlueGoalPosition extends LinearOpMode {
     //This is the four-ball auto code
     robot.runDriveInstructions(0.5, 34, -34, 6.0);
     robot.rightStrafe();
-    sleep(500);
+    sleep(400);
     robot.stopMotors();
     robot.intake.setPower(1);
     robot.transferMiddle.setPower(1);
     robot.transferBottom.setPower(1);
-    robot.runDriveInstructions(0.5, -40, -40, 6.0);
+    robot.runDriveInstructions(0.5, -35, -35, 6.0);
+    sleep(800);
     robot.intake.setPower(0);
     robot.transferMiddle.setPower(0);
     robot.transferBottom.setPower(0);
-    robot.runDriveInstructions(0.5, -35, 35, 6.0);
+    robot.runDriveInstructions(0.5, -34, 34, 6.0);
 
     robot.rightStrafe();
-    sleep(600);
+    sleep(650);
     robot.stopMotors();
 
     robot.runDriveInstructions(0.5, -7, -7, 6.0);
-    
+
     //This is the secondary artifact code
-    robot.setLauncherVelocity(0.231, 6);
+    robot.setLauncherVelocity(0.227, 6);
     robot.transferTop.setPower(1);
     sleep(2000);
     robot.setLauncherVelocity(0.242, 6);
@@ -95,10 +96,11 @@ public class BlueGoalPosition extends LinearOpMode {
     robot.intake.setPower(0);
     robot.setTransferPower(0);
     robot.setLauncherPower(0);
-    
+
     sleep(2500);
-    robot.runDriveInstructions(0.6, -24, 24, 4.0);  // S2: Turn Left 12 Inches with 4 Sec timeout
-    robot.runDriveInstructions(0.5, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+    robot.leftStrafe();
+    sleep(350);
+    robot.stopMotors();
   }
 }
 
